@@ -1,5 +1,4 @@
 ﻿/* Author: Amanda Stewart
- * Year: 2018
  * Purpose: To gain an understanding of C# and Windows Forms
  * Environment: Microsoft Visual Studio 2017 on Windows 10
  * Intent of Use: input your income and all expenses made with associated data
@@ -8,15 +7,14 @@
  *      and to set a budget and if you have gone over budget.
  */
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
+using System.IO;
+using System.Security;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BudgetApp
 {
@@ -30,13 +28,6 @@ namespace BudgetApp
             expense = new Expenses();
         }
 
-        
-        private void chart2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        
         private void IncomeUpdateButton_Click(object sender, EventArgs e)
         {
             try
@@ -48,7 +39,8 @@ namespace BudgetApp
             catch (Exception)
             {
                 System.Media.SystemSounds.Exclamation.Play();
-                MessageBox.Show("Error occured!!! Please ensure the field IS NOT empty and IS a number.");
+                MessageBox.Show("Error occured!!!" + 
+                    " Please ensure the field IS NOT empty and IS a number.");
             }
         }
 
@@ -75,12 +67,15 @@ namespace BudgetApp
                     default:
                         break;
                 }
-                expense.AddExpense(nameInput.Text, amount, dateInput.Value, catInputEnum);
+                expense.AddExpense(nameInput.Text, amount, dateInput.Value, 
+                    catInputEnum);
             }
             catch (Exception)
             {
                 System.Media.SystemSounds.Exclamation.Play();
-                MessageBox.Show("Error occured!!! Please ensure all fields are filled in and the amount field is a number.");
+                MessageBox.Show("Error occured!!!" + 
+                    " Please ensure all fields are filled in and the amount" +
+                    " field is a number.");
             }
         }
 
@@ -124,18 +119,24 @@ namespace BudgetApp
         private void monthlyOverviewButton_Click(object sender, EventArgs e)
         {
 
-            monthlyDetails.Text = expense.ShowOverview(TimeSpan.MONTHLY, this.month);
+            monthlyDetails.Text = expense.ShowOverview(TimeSpan.MONTHLY, 
+                this.month);
             monthlyChart.Series.Clear();
 
             //Draw the pie chart
             String seriesname = "monthlySeries";
             monthlyChart.Series.Add(seriesname);
-            monthlyChart.Series[seriesname].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            monthlyChart.Series[seriesname].ChartType = 
+                System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
             
-            monthlyChart.Series[seriesname].Points.AddXY("Food", expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY));
-            monthlyChart.Series[seriesname].Points.AddXY("House", expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY));
-            monthlyChart.Series[seriesname].Points.AddXY("Liesure", expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY));
-            monthlyChart.Series[seriesname].Points.AddXY("Needed", expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY));
+            monthlyChart.Series[seriesname].Points.AddXY("Food", 
+                expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY));
+            monthlyChart.Series[seriesname].Points.AddXY("House", 
+                expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY));
+            monthlyChart.Series[seriesname].Points.AddXY("Liesure", 
+                expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY));
+            monthlyChart.Series[seriesname].Points.AddXY("Needed", 
+                expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY));
         }
 
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
@@ -183,35 +184,72 @@ namespace BudgetApp
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /// Displays a SaveFileDialog so the user can save XML
-            // assigned to .  
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "XML|*.xml";
-            saveFileDialog1.Title = "Save an XML File";
+            saveFileDialog1.Filter = "Binary|*.bin";
+            saveFileDialog1.Title = "Save a Binary File";
             saveFileDialog1.ShowDialog();
 
             // If the file name is not an empty string open it for saving.  
             if (saveFileDialog1.FileName != "")
             {
                 // Saves the Image via a FileStream created by the OpenFile method.  
+
+                //SERIALIZE
                 System.IO.FileStream fs =
                    (System.IO.FileStream)saveFileDialog1.OpenFile();
-                
-
-
-                switch (saveFileDialog1.FilterIndex)
+                try
                 {
-                    case 1:
-                        XmlSerializer x = new XmlSerializer(typeof(Expenses));
-                        x.Serialize(fs, expense);
-                        break;
+                    switch (saveFileDialog1.FilterIndex)
+                    {
+                        case 1:
+                            BinaryFormatter f = new BinaryFormatter();
+                            f.Serialize(fs, expense);
+                            break;
+                    }
                 }
-                fs.Close();
+                catch (SerializationException ee)
+                {
+                    Console.WriteLine("Failed to serialize: " + ee.Message);
+                    throw;
+                }
+                finally
+                {
+                    fs.Close();
+                }
 
             }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Binary|*.bin";
+            openFileDialog1.Title = "Open a Binary File";
+            openFileDialog1.ShowDialog();
+            
+            // Saves the Image via a FileStream created by the OpenFile method.  
+
+            //DESERIALIZE
+            try
+            {
+                var filePath = openFileDialog1.FileName;
+                using(FileStream fs = File.Open(filePath, FileMode.Open))
+                {
+                    //Process.Start("notepad.exe, filePath");//"the system cannot find the file specified"
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    expense = (Expenses)formatter.Deserialize(fs);
+                }
+            }
+            catch (SerializationException ex)
+            {
+                MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
+                $"Details:\n\n{ex.StackTrace}");
+            }
+                
+
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
