@@ -25,59 +25,72 @@ namespace BudgetApp
         {
         }
     }
-    class ExpenseDataPointComparer : IComparer<ExpenseDataPoint>
+    public struct ExpenseDataPoint //: IComparable<ExpenseDataPoint>
     {
-        public int Compare(ExpenseDataPoint x, ExpenseDataPoint y)
-        {
-            if (x.date.CompareTo(y.date) == 0)
-            {
-                return 1;
-            }
-            return x.date.CompareTo(y.date);
-        }
-    }
-    struct ExpenseDataPoint
-    {
-        public string name;
-        public double amount;
-        public DateTime date;
+        public string name { get; set; }
+        public double amount { get; set; }
+        public DateTime date { get; set; }
         public ExpenseDataPoint(string n, double a, DateTime d)
         {
             name = n;
             amount = a;
             date = d;
         }
+
+        /*public int CompareTo(ExpenseDataPoint x)
+        {
+            if (date == x.date)
+            {
+                return name.ToUpper().CompareTo(x.name.ToUpper());
+            }
+            return date.CompareTo(x.date);
+        }
         public override string ToString()
         {
             return name + " " + amount + " " + date;
+        }*/
+    }
+
+    [Serializable]
+    class ExpenseDataPointComparer : IComparer<ExpenseDataPoint>
+    {
+        public int Compare(ExpenseDataPoint x, ExpenseDataPoint y)
+        {
+            if (x.date.CompareTo(y.date) == 0)
+            {
+                return x.name.ToUpper().CompareTo(y.name.ToUpper());
+            }
+            return x.date.CompareTo(y.date);
         }
     }
 
-
+    [Serializable]
     public class Expenses
     {
+        //wanted to make private fields and methods but couldn't because XML serialization wouldn't allow it.
+        //I'm using xml serialization because it might be on exam.
         private SortedSet<ExpenseDataPoint> foodDataSet;
         private double foodTotal;
         private double monthlyFoodTotal;
-
+         
         private SortedSet<ExpenseDataPoint> houseDataSet;
         private double houseTotal;
         private double monthlyHouseTotal;
-
+         
         private SortedSet<ExpenseDataPoint> liesureDataSet;
         private double liesureTotal;
         private double monthlyLiesureTotal;
-
+         
         private SortedSet<ExpenseDataPoint> neededDataSet;
         private double neededTotal;
         private double monthlyNeededTotal;
-
+         
         private double totalSpent;
         private double monthlyTotalSpent;
-
+         
         private double grossIncome;// yearly
-        
-
+         
+         
         private String expenseListFood;
         private String monthlyExpenseListFood;
         private String expenseListHouse;
@@ -91,51 +104,87 @@ namespace BudgetApp
         /* Contructor gives default values upon instantiation */
         public Expenses()
         {
-            foodTotal = 0;
-            monthlyFoodTotal = 0;
-            foodDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
-            houseTotal = 0;
-            monthlyHouseTotal = 0;
-            houseDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
-            liesureTotal = 0;
-            monthlyLiesureTotal = 0;
-            liesureDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
-            neededTotal = 0;
-            monthlyNeededTotal = 0;
-            neededDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
-            totalSpent = 0;
-            monthlyTotalSpent = 0;
-            grossIncome = 0;
+            this.foodTotal = 0;
+            this.monthlyFoodTotal = 0;
+            this.foodDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
+            this.houseTotal = 0;
+            this.monthlyHouseTotal = 0;
+            this.houseDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
+            this.liesureTotal = 0;
+            this.monthlyLiesureTotal = 0;
+            this.liesureDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
+            this.neededTotal = 0;
+            this.monthlyNeededTotal = 0;
+            this.neededDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
+            this.totalSpent = 0;
+            this.monthlyTotalSpent = 0;
+            this.grossIncome = 0;
+            
+            this.monthlyExpenseListFood = "";
+            this.expenseListHouse = "";
+            this.monthlyExpenseListHouse = "";
+            this.expenseListLiesure = "";
+            this.monthlyExpenseListLiesure = "";
+            this.expenseListNeeded = "";
+            this.monthlyExpenseListNeeded = "";
+            this.expenseListFood = "";
+    }
+
+        public Expenses(SortedSet<ExpenseDataPoint> foodDataSet, double foodTotal, double monthlyFoodTotal, SortedSet<ExpenseDataPoint> houseDataSet, double houseTotal, double monthlyHouseTotal, SortedSet<ExpenseDataPoint> liesureDataSet, double liesureTotal, double monthlyLiesureTotal, SortedSet<ExpenseDataPoint> neededDataSet, double neededTotal, double monthlyNeededTotal, double totalSpent, double monthlyTotalSpent, double grossIncome, string expenseListFood, string monthlyExpenseListFood, string expenseListHouse, string monthlyExpenseListHouse, string expenseListLiesure, string monthlyExpenseListLiesure, string expenseListNeeded, string monthlyExpenseListNeeded)
+        {
+            this.foodDataSet = foodDataSet;
+            this.foodTotal = foodTotal;
+            this.monthlyFoodTotal = monthlyFoodTotal;
+            this.houseDataSet = houseDataSet;
+            this.houseTotal = houseTotal;
+            this.monthlyHouseTotal = monthlyHouseTotal;
+            this.liesureDataSet = liesureDataSet;
+            this.liesureTotal = liesureTotal;
+            this.monthlyLiesureTotal = monthlyLiesureTotal;
+            this.neededDataSet = neededDataSet;
+            this.neededTotal = neededTotal;
+            this.monthlyNeededTotal = monthlyNeededTotal;
+            this.totalSpent = totalSpent;
+            this.monthlyTotalSpent = monthlyTotalSpent;
+            this.grossIncome = grossIncome;
+            this.expenseListFood = expenseListFood;
+            this.monthlyExpenseListFood = monthlyExpenseListFood;
+            this.expenseListHouse = expenseListHouse;
+            this.monthlyExpenseListHouse = monthlyExpenseListHouse;
+            this.expenseListLiesure = expenseListLiesure;
+            this.monthlyExpenseListLiesure = monthlyExpenseListLiesure;
+            this.expenseListNeeded = expenseListNeeded;
+            this.monthlyExpenseListNeeded = monthlyExpenseListNeeded;
         }
 
-       
+
+
         /* Gets details on an expense made and updates the corresponding set and totals */
-        public int AddExpense(string name, double amount, DateTime date, Category category)
+        public void AddExpense(string name, double amount, DateTime date, Category category)
         {
             ExpenseDataPoint dataPoint = new ExpenseDataPoint(name, amount, date);
             
             switch (category)
             {
                 case Category.FOOD:
-                    foodTotal += amount;
-                    foodDataSet.Add(dataPoint);
+                    this.foodTotal += amount;
+                    this.foodDataSet.Add(dataPoint);
                     break;
                 case Category.HOUSE:
-                    houseTotal += amount;
-                    houseDataSet.Add(dataPoint);
+                    this.houseTotal += amount;
+                    this.houseDataSet.Add(dataPoint);
                     break;
                 case Category.LIESURE:
-                    liesureTotal += amount;
-                    liesureDataSet.Add(dataPoint);
+                    this.liesureTotal += amount;
+                    this.liesureDataSet.Add(dataPoint);
                     break;
                 case Category.NEEDED:
-                    neededTotal += amount;
-                    neededDataSet.Add(dataPoint);
+                    this.neededTotal += amount;
+                    this.neededDataSet.Add(dataPoint);
                     break;
             }
 
             totalSpent += amount;
-            return 0;
         }
 
         public string UpdateGrossIncome(double grossIncome)
@@ -322,8 +371,19 @@ namespace BudgetApp
             return output;
         }
 
+        public override string ToString()
+        {
+            return base.ToString();
+        }
 
-        
-        
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

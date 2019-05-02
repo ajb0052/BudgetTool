@@ -1,0 +1,44 @@
+Where you left off: figuring out how to serialize SortedSet
+
+List of required features
+save - expense list housenot been updated. should be updated upon every add expense
+open
+delete expense
+edit expense
+new
+shortcuts
+menuhelp(list of all shortcuts, about page,)
+resizing page appropriately
+remove time from display in table
+
+extras
+name date amount shold be a table
+Undo last action
+redo last undo
+update upon date change
+update upon income update
+update upon added expense
+recovery files
+change pie chart color palette
+create help pages
+dark mode
+when you click a field it highlights contents
+does not populate what has not been added into pic chart
+limit length of item title to 15 letters
+change date format
+tooltips
+quick action bar
+a way to add multiple expenses with one click
+import excel
+print
+enter date to view
+change default save path
+clear data by cat or by all
+
+SAVE
+prompt user where to save and what to name it
+only allow it to be saved as xml
+
+turn contents in to xml format
+save file
+

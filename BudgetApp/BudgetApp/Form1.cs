@@ -8,15 +8,10 @@
  *      and to set a budget and if you have gone over budget.
  */
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BudgetApp
 {
@@ -183,10 +178,9 @@ namespace BudgetApp
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /// Displays a SaveFileDialog so the user can save XML
-            // assigned to .  
+            //SERIALIZE
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "XML|*.xml";
+            saveFileDialog1.Filter = "Binary|*.bin";
             saveFileDialog1.Title = "Save an XML File";
             saveFileDialog1.ShowDialog();
 
@@ -202,16 +196,31 @@ namespace BudgetApp
                 switch (saveFileDialog1.FilterIndex)
                 {
                     case 1:
-                        XmlSerializer x = new XmlSerializer(typeof(Expenses));
-                        x.Serialize(fs, expense);
+                        BinaryFormatter f = new BinaryFormatter();
+                        try
+                        {
+                            f.Serialize(fs, expense);
+                        }
+                        catch(SerializationException ee)
+                        {
+                            Console.WriteLine("Failed to serialize: " + ee.Message);
+                            throw;
+                        }
+                        finally {
+                            fs.Close();
+                        }
                         break;
                 }
-                fs.Close();
 
             }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
