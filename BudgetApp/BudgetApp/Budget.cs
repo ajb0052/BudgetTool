@@ -25,6 +25,7 @@ namespace BudgetApp
         {
         }
     }
+    [Serializable]
     public struct ExpenseDataPoint //: IComparable<ExpenseDataPoint>
     {
         public string name { get; set; }
@@ -36,19 +37,6 @@ namespace BudgetApp
             amount = a;
             date = d;
         }
-
-        /*public int CompareTo(ExpenseDataPoint x)
-        {
-            if (date == x.date)
-            {
-                return name.ToUpper().CompareTo(x.name.ToUpper());
-            }
-            return date.CompareTo(x.date);
-        }
-        public override string ToString()
-        {
-            return name + " " + amount + " " + date;
-        }*/
     }
 
     [Serializable]
@@ -128,34 +116,9 @@ namespace BudgetApp
             this.expenseListNeeded = "";
             this.monthlyExpenseListNeeded = "";
             this.expenseListFood = "";
-    }
-
-        public Expenses(SortedSet<ExpenseDataPoint> foodDataSet, double foodTotal, double monthlyFoodTotal, SortedSet<ExpenseDataPoint> houseDataSet, double houseTotal, double monthlyHouseTotal, SortedSet<ExpenseDataPoint> liesureDataSet, double liesureTotal, double monthlyLiesureTotal, SortedSet<ExpenseDataPoint> neededDataSet, double neededTotal, double monthlyNeededTotal, double totalSpent, double monthlyTotalSpent, double grossIncome, string expenseListFood, string monthlyExpenseListFood, string expenseListHouse, string monthlyExpenseListHouse, string expenseListLiesure, string monthlyExpenseListLiesure, string expenseListNeeded, string monthlyExpenseListNeeded)
-        {
-            this.foodDataSet = foodDataSet;
-            this.foodTotal = foodTotal;
-            this.monthlyFoodTotal = monthlyFoodTotal;
-            this.houseDataSet = houseDataSet;
-            this.houseTotal = houseTotal;
-            this.monthlyHouseTotal = monthlyHouseTotal;
-            this.liesureDataSet = liesureDataSet;
-            this.liesureTotal = liesureTotal;
-            this.monthlyLiesureTotal = monthlyLiesureTotal;
-            this.neededDataSet = neededDataSet;
-            this.neededTotal = neededTotal;
-            this.monthlyNeededTotal = monthlyNeededTotal;
-            this.totalSpent = totalSpent;
-            this.monthlyTotalSpent = monthlyTotalSpent;
-            this.grossIncome = grossIncome;
-            this.expenseListFood = expenseListFood;
-            this.monthlyExpenseListFood = monthlyExpenseListFood;
-            this.expenseListHouse = expenseListHouse;
-            this.monthlyExpenseListHouse = monthlyExpenseListHouse;
-            this.expenseListLiesure = expenseListLiesure;
-            this.monthlyExpenseListLiesure = monthlyExpenseListLiesure;
-            this.expenseListNeeded = expenseListNeeded;
-            this.monthlyExpenseListNeeded = monthlyExpenseListNeeded;
         }
+
+
 
 
 
@@ -369,21 +332,6 @@ namespace BudgetApp
                 output += point.name + " " + point.date + " "+ point.amount.ToString("C") + "\n";
             }
             return output;
-        }
-
-        public override string ToString()
-        {
-            return base.ToString();
-        }
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }

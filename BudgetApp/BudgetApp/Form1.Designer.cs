@@ -95,6 +95,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.IncomeDisplay = new System.Windows.Forms.Label();
             this.saveAsDialog = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.timespanControl.SuspendLayout();
             this.allTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.allChart)).BeginInit();
@@ -492,7 +493,6 @@
             this.yearlyChart.Size = new System.Drawing.Size(238, 172);
             this.yearlyChart.TabIndex = 0;
             this.yearlyChart.Text = "chart2";
-            this.yearlyChart.Click += new System.EventHandler(this.chart2_Click);
             // 
             // categoryInput
             // 
@@ -518,7 +518,7 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.Info;
+            this.menuStrip1.BackColor = System.Drawing.SystemColors.MenuBar;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
@@ -545,28 +545,28 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.openToolStripMenuItem.Text = "Open...";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolMenuItem
             // 
             this.saveToolMenuItem.Name = "saveToolMenuItem";
-            this.saveToolMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolMenuItem.Size = new System.Drawing.Size(123, 22);
             this.saveToolMenuItem.Text = "Save";
             this.saveToolMenuItem.Click += new System.EventHandler(this.saveToolMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.saveAsToolStripMenuItem.Text = "Save As...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -575,7 +575,7 @@
             this.fileImportMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.excelFileToolStripMenuItem});
             this.fileImportMenuItem.Name = "fileImportMenuItem";
-            this.fileImportMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fileImportMenuItem.Size = new System.Drawing.Size(123, 22);
             this.fileImportMenuItem.Text = "Import";
             // 
             // excelFileToolStripMenuItem
@@ -647,6 +647,10 @@
             this.IncomeDisplay.Size = new System.Drawing.Size(278, 152);
             this.IncomeDisplay.TabIndex = 19;
             this.IncomeDisplay.Text = "    ";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // Form1
             // 
@@ -747,6 +751,7 @@
         private System.Windows.Forms.ToolStripMenuItem darkModeToolStripMenuItem;
         private System.Windows.Forms.Label IncomeDisplay;
         private System.Windows.Forms.SaveFileDialog saveAsDialog;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
