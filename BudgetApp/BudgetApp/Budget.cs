@@ -117,11 +117,7 @@ namespace BudgetApp
             this.monthlyExpenseListNeeded = "";
             this.expenseListFood = "";
         }
-
-
-
-
-
+        
         /* Gets details on an expense made and updates the corresponding set and totals */
         public void AddExpense(string name, double amount, DateTime date, Category category)
         {

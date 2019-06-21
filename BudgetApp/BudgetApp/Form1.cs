@@ -253,5 +253,82 @@ namespace BudgetApp
         {
 
         }
+
+        private void BrightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
+            monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
+            yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
+        }
+
+        private void PastelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+            yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Pastel;
+        }
+
+        private void BrightPastelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.BrightPastel;
+            monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.BrightPastel;
+            yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.BrightPastel;
+        }
+
+        private void ExcelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
+            monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
+            yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
+        }
+
+        private void LightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Light;
+            monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Light;
+            yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Light;
+        }
+
+        private void EarthTonesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
+            monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
+            yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.EarthTones;
+        }
+
+        private void SemiTransparentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
+            monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
+            yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SemiTransparent;
+        }
+
+        private void BerryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+            monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+            yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Berry;
+        }
+
+        private void ChocolateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
+            monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
+            yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Chocolate;
+        }
+
+        private void FireToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
+            monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
+            yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
+        }
+
+        private void SeaGreenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            allChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+            yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
+        }
     }
 }
