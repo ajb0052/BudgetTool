@@ -43,7 +43,6 @@ namespace BudgetApp
                     " Please ensure the field IS NOT empty and IS a number.");
             }
         }
-
         private void AddExpense_Click(object sender, EventArgs e)
         {
             try
@@ -79,6 +78,7 @@ namespace BudgetApp
             }
         }
 
+        #region All
         private void allOverviewButton_Click(object sender, EventArgs e)
         {
 
@@ -88,27 +88,24 @@ namespace BudgetApp
             //Draw the pie Chart
             DisplayPieChart();
         }
-
         private void allFoodButton_Click(object sender, EventArgs e)
         {
             allDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
         }
-
         private void allHouseButton_Click(object sender, EventArgs e)
         {
             allDetails.Text = expense.ShowCategoryDetails(Category.HOUSE);
         }
-
         private void allLiesureButton_Click(object sender, EventArgs e)
         {
             allDetails.Text = expense.ShowCategoryDetails(Category.LIESURE);
         }
-
         private void allNeeedButton_Click(object sender, EventArgs e)
         {
             allDetails.Text = expense.ShowCategoryDetails(Category.NEEDED);
         }
-
+        #endregion
+        #region Monthly
         private void monthlyOverviewButton_Click(object sender, EventArgs e)
         {
 
@@ -139,7 +136,6 @@ namespace BudgetApp
             monthlyChart.Series[seriesname].Points[2].LegendText = "Liesure";
             monthlyChart.Series[seriesname].Points[3].LegendText = "Needed";
         }
-
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
             string[] parsedDate = monthCalendar1.SelectionStart.ToString().Split('/');
@@ -147,27 +143,22 @@ namespace BudgetApp
             double year = Double.Parse(parsedDate[2].Substring(0, 4));
             expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
         }
-
         private void monthlyFoodButton_Click(object sender, EventArgs e)
         {
             monthlyDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
         }
-
         private void monthlyHouseButton_Click(object sender, EventArgs e)
         {
             monthlyDetails.Text = expense.ShowCategoryDetails(Category.HOUSE);
         }
-
         private void monthlyLiesureButton_Click(object sender, EventArgs e)
         {
             monthlyDetails.Text = expense.ShowCategoryDetails(Category.LIESURE);
         }
-
         private void monthlyNeededButton_Click(object sender, EventArgs e)
         {
             monthlyDetails.Text = expense.ShowCategoryDetails(Category.NEEDED);
         }
-
         private void timespanControl_Click(object sender, EventArgs e)
         {
             string[] parsedDate = monthCalendar1.SelectionStart.ToString().Split('/');
@@ -177,16 +168,16 @@ namespace BudgetApp
             expense.UpdateMonthlyTotals(this.month);
             expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
         }
-
+        #endregion
+        #region File_Management
         private void saveToolMenuItem_Click(object sender, EventArgs e)
         {
             MenuFile.Save(expense);
         }
-
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = "Binary|*.bin|budget|*.budg";
+            saveFileDialog1.Filter = "budget|*.budg|Binary|*.bin";
             saveFileDialog1.Title = "Save File";
             saveFileDialog1.ShowDialog();
 
@@ -225,11 +216,10 @@ namespace BudgetApp
 
             }
         }
-
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "Binary|*.bin|Budget|*.budg";
+            openFileDialog1.Filter = "Budget|*.budg|Binary|*.bin";
             openFileDialog1.Title = "Open File";
             openFileDialog1.ShowDialog();
 
@@ -243,7 +233,6 @@ namespace BudgetApp
                 ////////////    THROWS EXCEPTION WHEN NO FILE IS CHOSEN AND WHEN THE FILE IS EMPTY AND LIKELY WHEN FOR INCORRECT FILE CONTENTS
                 using(FileStream fs = File.Open(filePath, FileMode.Open))
                 {
-                    //Process.Start("notepad.exe, filePath");//"the system cannot find the file specified"
                     BinaryFormatter formatter = new BinaryFormatter();
                     expense = (Expenses)formatter.Deserialize(fs);
                 }
@@ -260,7 +249,7 @@ namespace BudgetApp
         {
 
         }
-
+        #endregion
         #region Pie_Chart_Palette
         private void BrightToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -339,7 +328,6 @@ namespace BudgetApp
             yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
         }
         #endregion
-
         #region Helper_Classes
         private void DisplayPieChart()
         {

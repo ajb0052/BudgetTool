@@ -325,7 +325,7 @@ namespace BudgetApp
             }
             foreach (ExpenseDataPoint point in catDataSet)
             {
-                output += point.name + " " + point.date + " "+ point.amount.ToString("C") + "\n";
+                output += point.name + " " + point.date.ToShortDateString() + " "+ point.amount.ToString("C") + "\n";
             }
             return output;
         }
