@@ -68,6 +68,8 @@ namespace BudgetApp
                 }
                 expense.AddExpense(nameInput.Text, amount, dateInput.Value, 
                     catInputEnum);
+                this.TotalSpent.Text = expense.getTotalSpentAsString();
+                this.NetIncome.Text = expense.getNetTotalAsString();
             }
             catch (Exception)
             {
@@ -81,28 +83,30 @@ namespace BudgetApp
         #region All
         private void allOverviewButton_Click(object sender, EventArgs e)
         {
-
-            allDetails.Text = expense.ShowOverview();
             allChart.Series.Clear();
-
-            //Draw the pie Chart
             DisplayPieChart();
         }
-        private void allFoodButton_Click(object sender, EventArgs e)
+        private void CategoryAllDetailsDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            allDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
-        }
-        private void allHouseButton_Click(object sender, EventArgs e)
-        {
-            allDetails.Text = expense.ShowCategoryDetails(Category.HOUSE);
-        }
-        private void allLiesureButton_Click(object sender, EventArgs e)
-        {
-            allDetails.Text = expense.ShowCategoryDetails(Category.LIESURE);
-        }
-        private void allNeeedButton_Click(object sender, EventArgs e)
-        {
-            allDetails.Text = expense.ShowCategoryDetails(Category.NEEDED);
+            switch (CategoryAllDetailDropDown.SelectedIndex)
+            {
+                case 0:
+                    allDetails.Text = expense.ShowOverview();
+                    break;
+                case 1:
+                    allDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
+                    break;
+                case 2:
+                    allDetails.Text = expense.ShowCategoryDetails(Category.HOUSE);
+                    break;
+                case 3:
+                    allDetails.Text = expense.ShowCategoryDetails(Category.LIESURE);
+                    break;
+                case 4:
+                    allDetails.Text = expense.ShowCategoryDetails(Category.NEEDED);
+                    break;
+
+            }
         }
         #endregion
         #region Monthly
@@ -172,6 +176,11 @@ namespace BudgetApp
         #region File_Management
         private void saveToolMenuItem_Click(object sender, EventArgs e)
         {
+            //delete old file
+            foreach (System.Collections.DictionaryEntry file in Environment.GetEnvironmentVariables())
+                if (file.ToString() == expense.filename)
+                    Environment.SetEnvironmentVariable(file.ToString(), null);
+            //create new file
             MenuFile.Save(expense);
         }
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -187,22 +196,14 @@ namespace BudgetApp
                 // Saves the Image via a FileStream created by the OpenFile method.  
 
                 //SERIALIZE
-                System.IO.FileStream fs =
-                   (System.IO.FileStream)saveFileDialog1.OpenFile();
+                FileStream fileStream =
+                   (FileStream)saveFileDialog1.OpenFile();
+                expense.filename = saveFileDialog1.FileName;
                 try
                 {
-                    BinaryFormatter f = new BinaryFormatter();
-                    f.Serialize(fs, expense);
-                    /*
-                    switch (saveFileDialog1.FilterIndex)
-                    {
-                        case 1:
-                            BinaryFormatter f = new BinaryFormatter();
-                            f.Serialize(fs, expense);
-                            break;
-                        case 2:
-                            break;
-                    }*/
+                    BinaryFormatter bf = new BinaryFormatter();
+                    bf.Serialize(fileStream, expense);
+
                 }
                 catch (SerializationException ee)
                 {
@@ -211,7 +212,7 @@ namespace BudgetApp
                 }
                 finally
                 {
-                    fs.Close();
+                    fileStream.Close();
                 }
 
             }
@@ -235,6 +236,8 @@ namespace BudgetApp
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
                     expense = (Expenses)formatter.Deserialize(fs);
+                    //Update Display
+                    this.Text = "Budget Tool - " + openFileDialog1.FileName;
                 }
             }
             catch (SerializationException ex)
@@ -242,8 +245,6 @@ namespace BudgetApp
                 MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
                 $"Details:\n\n{ex.StackTrace}");
             }
-            //Update Display
-            this.Text = "Budget Tool - " + openFileDialog1.FileName;
         }
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -350,5 +351,9 @@ namespace BudgetApp
             //allChart.Series[seriesname]["PieLabelStyle"] = "Outside";
         }
         #endregion
+
+
+
+       
     }
 }

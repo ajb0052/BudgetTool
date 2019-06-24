@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace BudgetApp
 {
@@ -88,6 +89,8 @@ namespace BudgetApp
         private String expenseListNeeded;
         private String monthlyExpenseListNeeded;
 
+        public String filename;
+
 
         /* Contructor gives default values upon instantiation */
         public Expenses()
@@ -116,6 +119,8 @@ namespace BudgetApp
             this.expenseListNeeded = "";
             this.monthlyExpenseListNeeded = "";
             this.expenseListFood = "";
+
+            //this.fileStream = null;
         }
         
         /* Gets details on an expense made and updates the corresponding set and totals */
@@ -145,7 +150,15 @@ namespace BudgetApp
 
             totalSpent += amount;
         }
+        public string getTotalSpentAsString()
+        {
+            return "Total spent: " + this.totalSpent.ToString("C");
+        }
 
+        public string getNetTotalAsString()
+        {
+            return "Net total: " + (this.grossIncome - this.totalSpent).ToString("C");
+        }
         public string UpdateGrossIncome(double grossIncome)
         {
             this.grossIncome = grossIncome;
