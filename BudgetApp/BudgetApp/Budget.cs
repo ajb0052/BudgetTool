@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace BudgetApp
@@ -55,8 +56,7 @@ namespace BudgetApp
     [Serializable]
     public class Expenses
     {
-        //wanted to make private fields and methods but couldn't because XML serialization wouldn't allow it.
-        //I'm using xml serialization because it might be on exam.
+
         private SortedSet<ExpenseDataPoint> foodDataSet;
         private double foodTotal;
         private double monthlyFoodTotal;
@@ -72,10 +72,15 @@ namespace BudgetApp
         private SortedSet<ExpenseDataPoint> neededDataSet;
         private double neededTotal;
         private double monthlyNeededTotal;
-         
-        private double totalSpent;
+
+        public double totalSpent;
         private double monthlyTotalSpent;
-         
+
+
+        private ArrayList categoyDataSets = new ArrayList();
+        private ArrayList categoryTotals = new ArrayList();
+        private ArrayList monthlyCategoryTotals = new ArrayList();
+
         private double grossIncome;// yearly
          
          
@@ -116,6 +121,8 @@ namespace BudgetApp
             this.expenseListNeeded = "";
             this.monthlyExpenseListNeeded = "";
             this.expenseListFood = "";
+
+
         }
 
 
@@ -153,7 +160,7 @@ namespace BudgetApp
         public string UpdateGrossIncome(double grossIncome)
         {
             this.grossIncome = grossIncome;
-            string output = "Gross Income: " + grossIncome.ToString("C") + "\n";
+            string output = "Gross Income: " + grossIncome.ToString("C");
             return output;
         }
 

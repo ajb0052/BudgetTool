@@ -69,6 +69,7 @@ namespace BudgetApp
                 }
                 expense.AddExpense(nameInput.Text, amount, dateInput.Value, 
                     catInputEnum);
+                TotalSpent.Text = "Total Spent: " + expense.totalSpent.ToString("C");
             }
             catch (Exception)
             {
@@ -82,10 +83,8 @@ namespace BudgetApp
         private void allOverviewButton_Click(object sender, EventArgs e)
         {
 
-            allDetails.Text = expense.ShowOverview();
             allChart.Series.Clear();
 
-            //Draw the pie Chart
             String seriesname = "allSeries";
             allChart.Series.Add(seriesname);
             allChart.Series[seriesname].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
@@ -94,26 +93,6 @@ namespace BudgetApp
             allChart.Series[seriesname].Points.AddXY("House", expense.GetTotalPerCat(Category.HOUSE));
             allChart.Series[seriesname].Points.AddXY("Liesure", expense.GetTotalPerCat(Category.LIESURE));
             allChart.Series[seriesname].Points.AddXY("Needed", expense.GetTotalPerCat(Category.NEEDED));
-        }
-
-        private void allFoodButton_Click(object sender, EventArgs e)
-        {
-            allDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
-        }
-
-        private void allHouseButton_Click(object sender, EventArgs e)
-        {
-            allDetails.Text = expense.ShowCategoryDetails(Category.HOUSE);
-        }
-
-        private void allLiesureButton_Click(object sender, EventArgs e)
-        {
-            allDetails.Text = expense.ShowCategoryDetails(Category.LIESURE);
-        }
-
-        private void allNeeedButton_Click(object sender, EventArgs e)
-        {
-            allDetails.Text = expense.ShowCategoryDetails(Category.NEEDED);
         }
 
         private void monthlyOverviewButton_Click(object sender, EventArgs e)
@@ -252,6 +231,30 @@ namespace BudgetApp
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+
+        private void CategoryAllDetailDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (CategoryAllDetailDropDown.SelectedIndex)
+            {
+                case 0:
+                    allDetails.Text = expense.ShowOverview();
+                    break;
+                case 1:
+                    allDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
+                    break;
+                case 2:
+                    allDetails.Text = expense.ShowCategoryDetails(Category.HOUSE);
+                    break;
+                case 3:
+                    allDetails.Text = expense.ShowCategoryDetails(Category.LIESURE);
+                    break;
+                case 4:
+                    allDetails.Text = expense.ShowCategoryDetails(Category.NEEDED);
+                    break;
+
+            }
         }
     }
 }

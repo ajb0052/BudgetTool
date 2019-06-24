@@ -41,7 +41,7 @@
             this.IncomeUpdateButton = new System.Windows.Forms.Button();
             this.incomeTextBox = new System.Windows.Forms.TextBox();
             this.allDetails = new System.Windows.Forms.Label();
-            this.allOverviewButton = new System.Windows.Forms.Button();
+            this.UpdateChartButton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.amountInput = new System.Windows.Forms.TextBox();
             this.nameInput = new System.Windows.Forms.TextBox();
@@ -52,10 +52,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.timespanControl = new System.Windows.Forms.TabControl();
             this.allTab = new System.Windows.Forms.TabPage();
-            this.allNeeedButton = new System.Windows.Forms.Button();
-            this.allLiesureButton = new System.Windows.Forms.Button();
-            this.allHouseButton = new System.Windows.Forms.Button();
-            this.allFoodButton = new System.Windows.Forms.Button();
+            this.CategoryAllDetailDropDown = new System.Windows.Forms.ComboBox();
             this.allChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.monthlyTab = new System.Windows.Forms.TabPage();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
@@ -96,6 +93,9 @@
             this.IncomeDisplay = new System.Windows.Forms.Label();
             this.saveAsDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.addMultipleExpensesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.TotalSpent = new System.Windows.Forms.Label();
+            this.NetIncome = new System.Windows.Forms.Label();
             this.timespanControl.SuspendLayout();
             this.allTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.allChart)).BeginInit();
@@ -132,15 +132,15 @@
             this.allDetails.TabIndex = 2;
             this.allDetails.Text = "    ";
             // 
-            // allOverviewButton
+            // UpdateChartButton
             // 
-            this.allOverviewButton.Location = new System.Drawing.Point(7, 10);
-            this.allOverviewButton.Name = "allOverviewButton";
-            this.allOverviewButton.Size = new System.Drawing.Size(75, 23);
-            this.allOverviewButton.TabIndex = 3;
-            this.allOverviewButton.Text = "Chart";
-            this.allOverviewButton.UseVisualStyleBackColor = true;
-            this.allOverviewButton.Click += new System.EventHandler(this.allOverviewButton_Click);
+            this.UpdateChartButton.Location = new System.Drawing.Point(7, 10);
+            this.UpdateChartButton.Name = "UpdateChartButton";
+            this.UpdateChartButton.Size = new System.Drawing.Size(75, 35);
+            this.UpdateChartButton.TabIndex = 3;
+            this.UpdateChartButton.Text = "Update Chart";
+            this.UpdateChartButton.UseVisualStyleBackColor = true;
+            this.UpdateChartButton.Click += new System.EventHandler(this.allOverviewButton_Click);
             // 
             // button2
             // 
@@ -229,13 +229,10 @@
             // 
             // allTab
             // 
-            this.allTab.Controls.Add(this.allNeeedButton);
+            this.allTab.Controls.Add(this.CategoryAllDetailDropDown);
             this.allTab.Controls.Add(this.allDetails);
-            this.allTab.Controls.Add(this.allLiesureButton);
-            this.allTab.Controls.Add(this.allHouseButton);
-            this.allTab.Controls.Add(this.allFoodButton);
             this.allTab.Controls.Add(this.allChart);
-            this.allTab.Controls.Add(this.allOverviewButton);
+            this.allTab.Controls.Add(this.UpdateChartButton);
             this.allTab.Location = new System.Drawing.Point(4, 22);
             this.allTab.Name = "allTab";
             this.allTab.Padding = new System.Windows.Forms.Padding(3);
@@ -244,45 +241,21 @@
             this.allTab.Text = "All";
             this.allTab.UseVisualStyleBackColor = true;
             // 
-            // allNeeedButton
+            // CategoryAllDetailDropDown
             // 
-            this.allNeeedButton.Location = new System.Drawing.Point(7, 126);
-            this.allNeeedButton.Name = "allNeeedButton";
-            this.allNeeedButton.Size = new System.Drawing.Size(75, 23);
-            this.allNeeedButton.TabIndex = 4;
-            this.allNeeedButton.Text = "Needed";
-            this.allNeeedButton.UseVisualStyleBackColor = true;
-            this.allNeeedButton.Click += new System.EventHandler(this.allNeeedButton_Click);
-            // 
-            // allLiesureButton
-            // 
-            this.allLiesureButton.Location = new System.Drawing.Point(7, 97);
-            this.allLiesureButton.Name = "allLiesureButton";
-            this.allLiesureButton.Size = new System.Drawing.Size(75, 23);
-            this.allLiesureButton.TabIndex = 3;
-            this.allLiesureButton.Text = "Liesure";
-            this.allLiesureButton.UseVisualStyleBackColor = true;
-            this.allLiesureButton.Click += new System.EventHandler(this.allLiesureButton_Click);
-            // 
-            // allHouseButton
-            // 
-            this.allHouseButton.Location = new System.Drawing.Point(7, 68);
-            this.allHouseButton.Name = "allHouseButton";
-            this.allHouseButton.Size = new System.Drawing.Size(75, 23);
-            this.allHouseButton.TabIndex = 2;
-            this.allHouseButton.Text = "House";
-            this.allHouseButton.UseVisualStyleBackColor = true;
-            this.allHouseButton.Click += new System.EventHandler(this.allHouseButton_Click);
-            // 
-            // allFoodButton
-            // 
-            this.allFoodButton.Location = new System.Drawing.Point(7, 39);
-            this.allFoodButton.Name = "allFoodButton";
-            this.allFoodButton.Size = new System.Drawing.Size(75, 23);
-            this.allFoodButton.TabIndex = 1;
-            this.allFoodButton.Text = "Food";
-            this.allFoodButton.UseVisualStyleBackColor = true;
-            this.allFoodButton.Click += new System.EventHandler(this.allFoodButton_Click);
+            this.CategoryAllDetailDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CategoryAllDetailDropDown.FormattingEnabled = true;
+            this.CategoryAllDetailDropDown.Items.AddRange(new object[] {
+            "Overview",
+            "Food",
+            "House",
+            "Leisure",
+            "Needed"});
+            this.CategoryAllDetailDropDown.Location = new System.Drawing.Point(6, 51);
+            this.CategoryAllDetailDropDown.Name = "CategoryAllDetailDropDown";
+            this.CategoryAllDetailDropDown.Size = new System.Drawing.Size(75, 21);
+            this.CategoryAllDetailDropDown.TabIndex = 5;
+            this.CategoryAllDetailDropDown.SelectedIndexChanged += new System.EventHandler(this.CategoryAllDetailDropDown_SelectedIndexChanged);
             // 
             // allChart
             // 
@@ -589,7 +562,8 @@
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem,
-            this.addMultipleExpensesToolStripMenuItem});
+            this.addMultipleExpensesToolStripMenuItem,
+            this.addMultipleExpensesToolStripMenuItem1});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -610,7 +584,7 @@
             // 
             this.addMultipleExpensesToolStripMenuItem.Name = "addMultipleExpensesToolStripMenuItem";
             this.addMultipleExpensesToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
-            this.addMultipleExpensesToolStripMenuItem.Text = "Add Multiple Expenses...";
+            this.addMultipleExpensesToolStripMenuItem.Text = "Edit Categories...";
             // 
             // viiewToolStripMenuItem
             // 
@@ -644,13 +618,35 @@
             // 
             this.IncomeDisplay.Location = new System.Drawing.Point(352, 48);
             this.IncomeDisplay.Name = "IncomeDisplay";
-            this.IncomeDisplay.Size = new System.Drawing.Size(278, 152);
+            this.IncomeDisplay.Size = new System.Drawing.Size(278, 24);
             this.IncomeDisplay.TabIndex = 19;
             this.IncomeDisplay.Text = "    ";
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // addMultipleExpensesToolStripMenuItem1
+            // 
+            this.addMultipleExpensesToolStripMenuItem1.Name = "addMultipleExpensesToolStripMenuItem1";
+            this.addMultipleExpensesToolStripMenuItem1.Size = new System.Drawing.Size(202, 22);
+            this.addMultipleExpensesToolStripMenuItem1.Text = "Add Multiple Expenses...";
+            // 
+            // TotalSpent
+            // 
+            this.TotalSpent.Location = new System.Drawing.Point(352, 72);
+            this.TotalSpent.Name = "TotalSpent";
+            this.TotalSpent.Size = new System.Drawing.Size(278, 24);
+            this.TotalSpent.TabIndex = 20;
+            this.TotalSpent.Text = "    ";
+            // 
+            // NetIncome
+            // 
+            this.NetIncome.Location = new System.Drawing.Point(352, 89);
+            this.NetIncome.Name = "NetIncome";
+            this.NetIncome.Size = new System.Drawing.Size(278, 24);
+            this.NetIncome.TabIndex = 21;
+            this.NetIncome.Text = "    ";
             // 
             // Form1
             // 
@@ -659,6 +655,8 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.ClientSize = new System.Drawing.Size(928, 458);
+            this.Controls.Add(this.NetIncome);
+            this.Controls.Add(this.TotalSpent);
             this.Controls.Add(this.IncomeDisplay);
             this.Controls.Add(this.dateInput);
             this.Controls.Add(this.categoryInput);
@@ -697,7 +695,7 @@
         private System.Windows.Forms.Button IncomeUpdateButton;
         private System.Windows.Forms.TextBox incomeTextBox;
         private System.Windows.Forms.Label allDetails;
-        private System.Windows.Forms.Button allOverviewButton;
+        private System.Windows.Forms.Button UpdateChartButton;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox amountInput;
         private System.Windows.Forms.TextBox nameInput;
@@ -713,10 +711,6 @@
         private System.Windows.Forms.DateTimePicker dateInput;
         private System.Windows.Forms.DataVisualization.Charting.Chart yearlyChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart allChart;
-        private System.Windows.Forms.Button allHouseButton;
-        private System.Windows.Forms.Button allFoodButton;
-        private System.Windows.Forms.Button allNeeedButton;
-        private System.Windows.Forms.Button allLiesureButton;
         private System.Windows.Forms.TabPage monthlyTab;
         private System.Windows.Forms.DataVisualization.Charting.Chart monthlyChart;
         private System.Windows.Forms.Button monthlyNeededButton;
@@ -752,6 +746,10 @@
         private System.Windows.Forms.Label IncomeDisplay;
         private System.Windows.Forms.SaveFileDialog saveAsDialog;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ComboBox CategoryAllDetailDropDown;
+        private System.Windows.Forms.ToolStripMenuItem addMultipleExpensesToolStripMenuItem1;
+        private System.Windows.Forms.Label TotalSpent;
+        private System.Windows.Forms.Label NetIncome;
     }
 }
 
