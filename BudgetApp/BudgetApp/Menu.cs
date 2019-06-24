@@ -2,34 +2,26 @@
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+
 
 namespace BudgetApp
 {
     class MenuFile
-    { 
+    {
 
-        public static void Save(Expenses expenses)
+
+        public static void Save(Expenses expenseToBeSaved)
         {
+            FileStream fileStream = File.Create(expenseToBeSaved.filename);
 
+            BinaryFormatter bf = new BinaryFormatter();
+            bf.Serialize(fileStream, expenseToBeSaved);
 
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//Budget.xml";
-            FileStream file = File.Create(path);
-
-
-            XmlSerializer x = new XmlSerializer(typeof(Expenses));
-            x.Serialize(file, expenses);
-            file.Close();
-        }
-
-        public static void SaveAs(String filename, Expenses expenseToBeFiled)
-        {
-            // Create Stream
-            FileStream fs = File.Create(filename);
-
-            // Serialize
-            XmlSerializer x = new XmlSerializer(expenseToBeFiled.GetType());
-            x.Serialize(fs, expenseToBeFiled);
-            fs.Close();
+            //XmlSerializer x = new XmlSerializer(expenseToBeSaved.GetType());
+           // x.Serialize(fileStream, expenseToBeSaved);
+            fileStream.Close();
         }
 
     }

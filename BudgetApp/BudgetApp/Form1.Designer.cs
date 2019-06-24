@@ -52,10 +52,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.timespanControl = new System.Windows.Forms.TabControl();
             this.allTab = new System.Windows.Forms.TabPage();
-            this.allNeeedButton = new System.Windows.Forms.Button();
-            this.allLiesureButton = new System.Windows.Forms.Button();
-            this.allHouseButton = new System.Windows.Forms.Button();
-            this.allFoodButton = new System.Windows.Forms.Button();
+            this.CategoryAllDetailDropDown = new System.Windows.Forms.ComboBox();
             this.allChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.monthlyTab = new System.Windows.Forms.TabPage();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
@@ -85,6 +82,9 @@
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fileImportMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.excelFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.paletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.defaultSaveLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,9 +106,8 @@
             this.IncomeDisplay = new System.Windows.Forms.Label();
             this.saveAsDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.preferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.paletteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.defaultSaveLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TotalSpent = new System.Windows.Forms.Label();
+            this.NetIncome = new System.Windows.Forms.Label();
             this.timespanControl.SuspendLayout();
             this.allTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.allChart)).BeginInit();
@@ -151,9 +150,9 @@
             this.allOverviewButton.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.allOverviewButton.Location = new System.Drawing.Point(7, 10);
             this.allOverviewButton.Name = "allOverviewButton";
-            this.allOverviewButton.Size = new System.Drawing.Size(75, 23);
+            this.allOverviewButton.Size = new System.Drawing.Size(75, 35);
             this.allOverviewButton.TabIndex = 3;
-            this.allOverviewButton.Text = "Chart";
+            this.allOverviewButton.Text = "Update Chart";
             this.allOverviewButton.UseVisualStyleBackColor = false;
             this.allOverviewButton.Click += new System.EventHandler(this.allOverviewButton_Click);
             // 
@@ -245,11 +244,8 @@
             // 
             // allTab
             // 
-            this.allTab.Controls.Add(this.allNeeedButton);
+            this.allTab.Controls.Add(this.CategoryAllDetailDropDown);
             this.allTab.Controls.Add(this.allDetails);
-            this.allTab.Controls.Add(this.allLiesureButton);
-            this.allTab.Controls.Add(this.allHouseButton);
-            this.allTab.Controls.Add(this.allFoodButton);
             this.allTab.Controls.Add(this.allChart);
             this.allTab.Controls.Add(this.allOverviewButton);
             this.allTab.Location = new System.Drawing.Point(4, 22);
@@ -260,49 +256,21 @@
             this.allTab.Text = "All";
             this.allTab.UseVisualStyleBackColor = true;
             // 
-            // allNeeedButton
+            // CategoryAllDetailDropDown
             // 
-            this.allNeeedButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.allNeeedButton.Location = new System.Drawing.Point(7, 126);
-            this.allNeeedButton.Name = "allNeeedButton";
-            this.allNeeedButton.Size = new System.Drawing.Size(75, 23);
-            this.allNeeedButton.TabIndex = 4;
-            this.allNeeedButton.Text = "Needed";
-            this.allNeeedButton.UseVisualStyleBackColor = false;
-            this.allNeeedButton.Click += new System.EventHandler(this.allNeeedButton_Click);
-            // 
-            // allLiesureButton
-            // 
-            this.allLiesureButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.allLiesureButton.Location = new System.Drawing.Point(7, 97);
-            this.allLiesureButton.Name = "allLiesureButton";
-            this.allLiesureButton.Size = new System.Drawing.Size(75, 23);
-            this.allLiesureButton.TabIndex = 3;
-            this.allLiesureButton.Text = "Liesure";
-            this.allLiesureButton.UseVisualStyleBackColor = false;
-            this.allLiesureButton.Click += new System.EventHandler(this.allLiesureButton_Click);
-            // 
-            // allHouseButton
-            // 
-            this.allHouseButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.allHouseButton.Location = new System.Drawing.Point(7, 68);
-            this.allHouseButton.Name = "allHouseButton";
-            this.allHouseButton.Size = new System.Drawing.Size(75, 23);
-            this.allHouseButton.TabIndex = 2;
-            this.allHouseButton.Text = "House";
-            this.allHouseButton.UseVisualStyleBackColor = false;
-            this.allHouseButton.Click += new System.EventHandler(this.allHouseButton_Click);
-            // 
-            // allFoodButton
-            // 
-            this.allFoodButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.allFoodButton.Location = new System.Drawing.Point(7, 39);
-            this.allFoodButton.Name = "allFoodButton";
-            this.allFoodButton.Size = new System.Drawing.Size(75, 23);
-            this.allFoodButton.TabIndex = 1;
-            this.allFoodButton.Text = "Food";
-            this.allFoodButton.UseVisualStyleBackColor = false;
-            this.allFoodButton.Click += new System.EventHandler(this.allFoodButton_Click);
+            this.CategoryAllDetailDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CategoryAllDetailDropDown.FormattingEnabled = true;
+            this.CategoryAllDetailDropDown.Items.AddRange(new object[] {
+            "Overview",
+            "Food",
+            "House",
+            "Liesure",
+            "Needed"});
+            this.CategoryAllDetailDropDown.Location = new System.Drawing.Point(7, 51);
+            this.CategoryAllDetailDropDown.Name = "CategoryAllDetailDropDown";
+            this.CategoryAllDetailDropDown.Size = new System.Drawing.Size(75, 21);
+            this.CategoryAllDetailDropDown.TabIndex = 5;
+            this.CategoryAllDetailDropDown.SelectedIndexChanged += new System.EventHandler(this.CategoryAllDetailsDropDown_SelectedIndexChanged);
             // 
             // allChart
             // 
@@ -606,6 +574,27 @@
             this.excelFileToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.excelFileToolStripMenuItem.Text = "Excel File";
             // 
+            // preferencesToolStripMenuItem
+            // 
+            this.preferencesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.paletteToolStripMenuItem,
+            this.defaultSaveLocationToolStripMenuItem});
+            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.preferencesToolStripMenuItem.Text = "Preferences";
+            // 
+            // paletteToolStripMenuItem
+            // 
+            this.paletteToolStripMenuItem.Name = "paletteToolStripMenuItem";
+            this.paletteToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.paletteToolStripMenuItem.Text = "Default Palette";
+            // 
+            // defaultSaveLocationToolStripMenuItem
+            // 
+            this.defaultSaveLocationToolStripMenuItem.Name = "defaultSaveLocationToolStripMenuItem";
+            this.defaultSaveLocationToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.defaultSaveLocationToolStripMenuItem.Text = "Default save location";
+            // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -657,7 +646,7 @@
             this.fireToolStripMenuItem,
             this.seaGreenToolStripMenuItem});
             this.pieChartPalatteToolStripMenuItem.Name = "pieChartPalatteToolStripMenuItem";
-            this.pieChartPalatteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pieChartPalatteToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.pieChartPalatteToolStripMenuItem.Text = "Pie Chart Palatte";
             // 
             // brightToolStripMenuItem
@@ -747,7 +736,7 @@
             // 
             this.IncomeDisplay.Location = new System.Drawing.Point(352, 48);
             this.IncomeDisplay.Name = "IncomeDisplay";
-            this.IncomeDisplay.Size = new System.Drawing.Size(278, 152);
+            this.IncomeDisplay.Size = new System.Drawing.Size(278, 24);
             this.IncomeDisplay.TabIndex = 19;
             this.IncomeDisplay.Text = "    ";
             // 
@@ -755,26 +744,21 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // preferencesToolStripMenuItem
+            // TotalSpent
             // 
-            this.preferencesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.paletteToolStripMenuItem,
-            this.defaultSaveLocationToolStripMenuItem});
-            this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.preferencesToolStripMenuItem.Text = "Preferences";
+            this.TotalSpent.Location = new System.Drawing.Point(352, 72);
+            this.TotalSpent.Name = "TotalSpent";
+            this.TotalSpent.Size = new System.Drawing.Size(278, 24);
+            this.TotalSpent.TabIndex = 20;
+            this.TotalSpent.Text = "    ";
             // 
-            // paletteToolStripMenuItem
+            // NetIncome
             // 
-            this.paletteToolStripMenuItem.Name = "paletteToolStripMenuItem";
-            this.paletteToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.paletteToolStripMenuItem.Text = "Palette";
-            // 
-            // defaultSaveLocationToolStripMenuItem
-            // 
-            this.defaultSaveLocationToolStripMenuItem.Name = "defaultSaveLocationToolStripMenuItem";
-            this.defaultSaveLocationToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.defaultSaveLocationToolStripMenuItem.Text = "Default save location";
+            this.NetIncome.Location = new System.Drawing.Point(352, 89);
+            this.NetIncome.Name = "NetIncome";
+            this.NetIncome.Size = new System.Drawing.Size(278, 24);
+            this.NetIncome.TabIndex = 21;
+            this.NetIncome.Text = "    ";
             // 
             // Form1
             // 
@@ -784,6 +768,8 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.ClientSize = new System.Drawing.Size(928, 458);
+            this.Controls.Add(this.NetIncome);
+            this.Controls.Add(this.TotalSpent);
             this.Controls.Add(this.IncomeDisplay);
             this.Controls.Add(this.dateInput);
             this.Controls.Add(this.categoryInput);
@@ -838,10 +824,6 @@
         private System.Windows.Forms.DateTimePicker dateInput;
         private System.Windows.Forms.DataVisualization.Charting.Chart yearlyChart;
         private System.Windows.Forms.DataVisualization.Charting.Chart allChart;
-        private System.Windows.Forms.Button allHouseButton;
-        private System.Windows.Forms.Button allFoodButton;
-        private System.Windows.Forms.Button allNeeedButton;
-        private System.Windows.Forms.Button allLiesureButton;
         private System.Windows.Forms.TabPage monthlyTab;
         private System.Windows.Forms.DataVisualization.Charting.Chart monthlyChart;
         private System.Windows.Forms.Button monthlyNeededButton;
@@ -890,6 +872,9 @@
         private System.Windows.Forms.ToolStripMenuItem preferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem paletteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem defaultSaveLocationToolStripMenuItem;
+        private System.Windows.Forms.ComboBox CategoryAllDetailDropDown;
+        private System.Windows.Forms.Label TotalSpent;
+        private System.Windows.Forms.Label NetIncome;
     }
 }
 
