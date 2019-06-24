@@ -117,11 +117,7 @@ namespace BudgetApp
             this.monthlyExpenseListNeeded = "";
             this.expenseListFood = "";
         }
-
-
-
-
-
+        
         /* Gets details on an expense made and updates the corresponding set and totals */
         public void AddExpense(string name, double amount, DateTime date, Category category)
         {
@@ -329,7 +325,7 @@ namespace BudgetApp
             }
             foreach (ExpenseDataPoint point in catDataSet)
             {
-                output += point.name + " " + point.date + " "+ point.amount.ToString("C") + "\n";
+                output += point.name + " " + point.date.ToShortDateString() + " "+ point.amount.ToString("C") + "\n";
             }
             return output;
         }
