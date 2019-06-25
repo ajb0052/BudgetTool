@@ -28,3 +28,13 @@ D:\Aurora\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\obj\Debug\BudgetApp.cs
 D:\Aurora\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\obj\Debug\BudgetApp.csproj.CoreCompileInputs.cache
 D:\Aurora\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\obj\Debug\BudgetApp.exe
 D:\Aurora\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\obj\Debug\BudgetApp.pdb
+D:\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\bin\Debug\BudgetApp.exe.config
+D:\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\bin\Debug\BudgetApp.exe
+D:\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\bin\Debug\BudgetApp.pdb
+D:\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\obj\Debug\BudgetApp.csprojAssemblyReference.cache
+D:\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\obj\Debug\BudgetApp.Form1.resources
+D:\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\obj\Debug\BudgetApp.Properties.Resources.resources
+D:\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\obj\Debug\BudgetApp.csproj.GenerateResource.cache
+D:\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\obj\Debug\BudgetApp.csproj.CoreCompileInputs.cache
+D:\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\obj\Debug\BudgetApp.exe
+D:\Documents\GitHub\BudgetTool\BudgetApp\BudgetApp\obj\Debug\BudgetApp.pdb

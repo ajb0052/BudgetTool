@@ -41,7 +41,7 @@
             this.IncomeUpdateButton = new System.Windows.Forms.Button();
             this.incomeTextBox = new System.Windows.Forms.TextBox();
             this.allDetails = new System.Windows.Forms.Label();
-            this.allOverviewButton = new System.Windows.Forms.Button();
+            this.updateChartButton = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.amountInput = new System.Windows.Forms.TextBox();
             this.nameInput = new System.Windows.Forms.TextBox();
@@ -55,21 +55,14 @@
             this.CategoryAllDetailDropDown = new System.Windows.Forms.ComboBox();
             this.allChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.monthlyTab = new System.Windows.Forms.TabPage();
+            this.CategoryMonthlyDetailDropDown = new System.Windows.Forms.ComboBox();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.monthlyDetails = new System.Windows.Forms.Label();
-            this.monthlyNeededButton = new System.Windows.Forms.Button();
-            this.monthlyLiesureButton = new System.Windows.Forms.Button();
-            this.monthlyHouseButton = new System.Windows.Forms.Button();
-            this.monthlyFoodButton = new System.Windows.Forms.Button();
             this.monthlyOverviewButton = new System.Windows.Forms.Button();
             this.monthlyChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.yearlyTab = new System.Windows.Forms.TabPage();
             this.monthCalendar2 = new System.Windows.Forms.MonthCalendar();
             this.label7 = new System.Windows.Forms.Label();
-            this.yearlyNeededButton = new System.Windows.Forms.Button();
-            this.yearlyLiesureButton = new System.Windows.Forms.Button();
-            this.yearlyHouseButton = new System.Windows.Forms.Button();
-            this.yearlyFoodButton = new System.Windows.Forms.Button();
             this.yearlyOverviewButton = new System.Windows.Forms.Button();
             this.yearlyChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.categoryInput = new System.Windows.Forms.ComboBox();
@@ -145,16 +138,16 @@
             this.allDetails.TabIndex = 2;
             this.allDetails.Text = "    ";
             // 
-            // allOverviewButton
+            // updateChartButton
             // 
-            this.allOverviewButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.allOverviewButton.Location = new System.Drawing.Point(7, 10);
-            this.allOverviewButton.Name = "allOverviewButton";
-            this.allOverviewButton.Size = new System.Drawing.Size(75, 35);
-            this.allOverviewButton.TabIndex = 3;
-            this.allOverviewButton.Text = "Update Chart";
-            this.allOverviewButton.UseVisualStyleBackColor = false;
-            this.allOverviewButton.Click += new System.EventHandler(this.allOverviewButton_Click);
+            this.updateChartButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.updateChartButton.Location = new System.Drawing.Point(7, 10);
+            this.updateChartButton.Name = "updateChartButton";
+            this.updateChartButton.Size = new System.Drawing.Size(75, 35);
+            this.updateChartButton.TabIndex = 3;
+            this.updateChartButton.Text = "Update Chart";
+            this.updateChartButton.UseVisualStyleBackColor = false;
+            this.updateChartButton.Click += new System.EventHandler(this.UpdateChartButton_Click);
             // 
             // button2
             // 
@@ -247,7 +240,7 @@
             this.allTab.Controls.Add(this.CategoryAllDetailDropDown);
             this.allTab.Controls.Add(this.allDetails);
             this.allTab.Controls.Add(this.allChart);
-            this.allTab.Controls.Add(this.allOverviewButton);
+            this.allTab.Controls.Add(this.updateChartButton);
             this.allTab.Location = new System.Drawing.Point(4, 22);
             this.allTab.Name = "allTab";
             this.allTab.Padding = new System.Windows.Forms.Padding(3);
@@ -289,15 +282,13 @@
             this.allChart.Size = new System.Drawing.Size(238, 172);
             this.allChart.TabIndex = 0;
             this.allChart.Text = "All";
+            this.allChart.Click += new System.EventHandler(this.allChart_Click);
             // 
             // monthlyTab
             // 
+            this.monthlyTab.Controls.Add(this.CategoryMonthlyDetailDropDown);
             this.monthlyTab.Controls.Add(this.monthCalendar1);
             this.monthlyTab.Controls.Add(this.monthlyDetails);
-            this.monthlyTab.Controls.Add(this.monthlyNeededButton);
-            this.monthlyTab.Controls.Add(this.monthlyLiesureButton);
-            this.monthlyTab.Controls.Add(this.monthlyHouseButton);
-            this.monthlyTab.Controls.Add(this.monthlyFoodButton);
             this.monthlyTab.Controls.Add(this.monthlyOverviewButton);
             this.monthlyTab.Controls.Add(this.monthlyChart);
             this.monthlyTab.Location = new System.Drawing.Point(4, 22);
@@ -306,6 +297,22 @@
             this.monthlyTab.TabIndex = 2;
             this.monthlyTab.Text = "Monthly";
             this.monthlyTab.UseVisualStyleBackColor = true;
+            // 
+            // CategoryMonthlyDetailDropDown
+            // 
+            this.CategoryMonthlyDetailDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CategoryMonthlyDetailDropDown.FormattingEnabled = true;
+            this.CategoryMonthlyDetailDropDown.Items.AddRange(new object[] {
+            "Overview",
+            "Food",
+            "House",
+            "Liesure",
+            "Needed"});
+            this.CategoryMonthlyDetailDropDown.Location = new System.Drawing.Point(7, 51);
+            this.CategoryMonthlyDetailDropDown.Name = "CategoryMonthlyDetailDropDown";
+            this.CategoryMonthlyDetailDropDown.Size = new System.Drawing.Size(75, 21);
+            this.CategoryMonthlyDetailDropDown.TabIndex = 12;
+            this.CategoryMonthlyDetailDropDown.SelectedIndexChanged += new System.EventHandler(this.CategoryMonthlyDetailDropDown_SelectedIndexChanged);
             // 
             // monthCalendar1
             // 
@@ -322,53 +329,13 @@
             this.monthlyDetails.TabIndex = 10;
             this.monthlyDetails.Text = "    ";
             // 
-            // monthlyNeededButton
-            // 
-            this.monthlyNeededButton.Location = new System.Drawing.Point(7, 126);
-            this.monthlyNeededButton.Name = "monthlyNeededButton";
-            this.monthlyNeededButton.Size = new System.Drawing.Size(75, 23);
-            this.monthlyNeededButton.TabIndex = 9;
-            this.monthlyNeededButton.Text = "Needed";
-            this.monthlyNeededButton.UseVisualStyleBackColor = true;
-            this.monthlyNeededButton.Click += new System.EventHandler(this.monthlyNeededButton_Click);
-            // 
-            // monthlyLiesureButton
-            // 
-            this.monthlyLiesureButton.Location = new System.Drawing.Point(7, 97);
-            this.monthlyLiesureButton.Name = "monthlyLiesureButton";
-            this.monthlyLiesureButton.Size = new System.Drawing.Size(75, 23);
-            this.monthlyLiesureButton.TabIndex = 7;
-            this.monthlyLiesureButton.Text = "Liesure";
-            this.monthlyLiesureButton.UseVisualStyleBackColor = true;
-            this.monthlyLiesureButton.Click += new System.EventHandler(this.monthlyLiesureButton_Click);
-            // 
-            // monthlyHouseButton
-            // 
-            this.monthlyHouseButton.Location = new System.Drawing.Point(7, 68);
-            this.monthlyHouseButton.Name = "monthlyHouseButton";
-            this.monthlyHouseButton.Size = new System.Drawing.Size(75, 23);
-            this.monthlyHouseButton.TabIndex = 6;
-            this.monthlyHouseButton.Text = "House";
-            this.monthlyHouseButton.UseVisualStyleBackColor = true;
-            this.monthlyHouseButton.Click += new System.EventHandler(this.monthlyHouseButton_Click);
-            // 
-            // monthlyFoodButton
-            // 
-            this.monthlyFoodButton.Location = new System.Drawing.Point(7, 39);
-            this.monthlyFoodButton.Name = "monthlyFoodButton";
-            this.monthlyFoodButton.Size = new System.Drawing.Size(75, 23);
-            this.monthlyFoodButton.TabIndex = 5;
-            this.monthlyFoodButton.Text = "Food";
-            this.monthlyFoodButton.UseVisualStyleBackColor = true;
-            this.monthlyFoodButton.Click += new System.EventHandler(this.monthlyFoodButton_Click);
-            // 
             // monthlyOverviewButton
             // 
             this.monthlyOverviewButton.Location = new System.Drawing.Point(7, 10);
             this.monthlyOverviewButton.Name = "monthlyOverviewButton";
-            this.monthlyOverviewButton.Size = new System.Drawing.Size(75, 23);
+            this.monthlyOverviewButton.Size = new System.Drawing.Size(75, 35);
             this.monthlyOverviewButton.TabIndex = 8;
-            this.monthlyOverviewButton.Text = "Chart";
+            this.monthlyOverviewButton.Text = "Update Chart";
             this.monthlyOverviewButton.UseVisualStyleBackColor = true;
             this.monthlyOverviewButton.Click += new System.EventHandler(this.monthlyOverviewButton_Click);
             // 
@@ -393,10 +360,6 @@
             // 
             this.yearlyTab.Controls.Add(this.monthCalendar2);
             this.yearlyTab.Controls.Add(this.label7);
-            this.yearlyTab.Controls.Add(this.yearlyNeededButton);
-            this.yearlyTab.Controls.Add(this.yearlyLiesureButton);
-            this.yearlyTab.Controls.Add(this.yearlyHouseButton);
-            this.yearlyTab.Controls.Add(this.yearlyFoodButton);
             this.yearlyTab.Controls.Add(this.yearlyOverviewButton);
             this.yearlyTab.Controls.Add(this.yearlyChart);
             this.yearlyTab.Location = new System.Drawing.Point(4, 22);
@@ -420,42 +383,6 @@
             this.label7.Size = new System.Drawing.Size(278, 152);
             this.label7.TabIndex = 10;
             this.label7.Text = "   ";
-            // 
-            // yearlyNeededButton
-            // 
-            this.yearlyNeededButton.Location = new System.Drawing.Point(7, 126);
-            this.yearlyNeededButton.Name = "yearlyNeededButton";
-            this.yearlyNeededButton.Size = new System.Drawing.Size(75, 23);
-            this.yearlyNeededButton.TabIndex = 9;
-            this.yearlyNeededButton.Text = "Needed";
-            this.yearlyNeededButton.UseVisualStyleBackColor = true;
-            // 
-            // yearlyLiesureButton
-            // 
-            this.yearlyLiesureButton.Location = new System.Drawing.Point(7, 97);
-            this.yearlyLiesureButton.Name = "yearlyLiesureButton";
-            this.yearlyLiesureButton.Size = new System.Drawing.Size(75, 23);
-            this.yearlyLiesureButton.TabIndex = 7;
-            this.yearlyLiesureButton.Text = "Liesure";
-            this.yearlyLiesureButton.UseVisualStyleBackColor = true;
-            // 
-            // yearlyHouseButton
-            // 
-            this.yearlyHouseButton.Location = new System.Drawing.Point(7, 68);
-            this.yearlyHouseButton.Name = "yearlyHouseButton";
-            this.yearlyHouseButton.Size = new System.Drawing.Size(75, 23);
-            this.yearlyHouseButton.TabIndex = 6;
-            this.yearlyHouseButton.Text = "House";
-            this.yearlyHouseButton.UseVisualStyleBackColor = true;
-            // 
-            // yearlyFoodButton
-            // 
-            this.yearlyFoodButton.Location = new System.Drawing.Point(7, 39);
-            this.yearlyFoodButton.Name = "yearlyFoodButton";
-            this.yearlyFoodButton.Size = new System.Drawing.Size(75, 23);
-            this.yearlyFoodButton.TabIndex = 5;
-            this.yearlyFoodButton.Text = "Food";
-            this.yearlyFoodButton.UseVisualStyleBackColor = true;
             // 
             // yearlyOverviewButton
             // 
@@ -535,28 +462,28 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.openToolStripMenuItem.Text = "Open...";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // saveToolMenuItem
             // 
             this.saveToolMenuItem.Name = "saveToolMenuItem";
-            this.saveToolMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolMenuItem.Size = new System.Drawing.Size(135, 22);
             this.saveToolMenuItem.Text = "Save";
             this.saveToolMenuItem.Click += new System.EventHandler(this.saveToolMenuItem_Click);
             // 
             // saveAsToolStripMenuItem
             // 
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.saveAsToolStripMenuItem.Text = "Save As...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
@@ -565,7 +492,7 @@
             this.fileImportMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.excelFileToolStripMenuItem});
             this.fileImportMenuItem.Name = "fileImportMenuItem";
-            this.fileImportMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fileImportMenuItem.Size = new System.Drawing.Size(135, 22);
             this.fileImportMenuItem.Text = "Import";
             // 
             // excelFileToolStripMenuItem
@@ -580,7 +507,7 @@
             this.paletteToolStripMenuItem,
             this.defaultSaveLocationToolStripMenuItem});
             this.preferencesToolStripMenuItem.Name = "preferencesToolStripMenuItem";
-            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.preferencesToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.preferencesToolStripMenuItem.Text = "Preferences";
             // 
             // paletteToolStripMenuItem
@@ -808,7 +735,7 @@
         private System.Windows.Forms.Button IncomeUpdateButton;
         private System.Windows.Forms.TextBox incomeTextBox;
         private System.Windows.Forms.Label allDetails;
-        private System.Windows.Forms.Button allOverviewButton;
+        private System.Windows.Forms.Button updateChartButton;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox amountInput;
         private System.Windows.Forms.TextBox nameInput;
@@ -826,15 +753,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart allChart;
         private System.Windows.Forms.TabPage monthlyTab;
         private System.Windows.Forms.DataVisualization.Charting.Chart monthlyChart;
-        private System.Windows.Forms.Button monthlyNeededButton;
-        private System.Windows.Forms.Button monthlyLiesureButton;
-        private System.Windows.Forms.Button monthlyHouseButton;
-        private System.Windows.Forms.Button monthlyFoodButton;
         private System.Windows.Forms.Button monthlyOverviewButton;
-        private System.Windows.Forms.Button yearlyNeededButton;
-        private System.Windows.Forms.Button yearlyLiesureButton;
-        private System.Windows.Forms.Button yearlyHouseButton;
-        private System.Windows.Forms.Button yearlyFoodButton;
         private System.Windows.Forms.Button yearlyOverviewButton;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.Label monthlyDetails;
@@ -875,6 +794,7 @@
         private System.Windows.Forms.ComboBox CategoryAllDetailDropDown;
         private System.Windows.Forms.Label TotalSpent;
         private System.Windows.Forms.Label NetIncome;
+        private System.Windows.Forms.ComboBox CategoryMonthlyDetailDropDown;
     }
 }
 

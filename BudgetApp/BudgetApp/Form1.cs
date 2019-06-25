@@ -81,7 +81,7 @@ namespace BudgetApp
         }
 
         #region All
-        private void allOverviewButton_Click(object sender, EventArgs e)
+        private void UpdateChartButton_Click(object sender, EventArgs e)
         {
             allChart.Series.Clear();
             DisplayPieChart();
@@ -110,11 +110,33 @@ namespace BudgetApp
         }
         #endregion
         #region Monthly
+        private void CategoryMonthlyDetailDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (CategoryMonthlyDetailDropDown.SelectedIndex)
+            {
+                case 0:
+                    monthlyDetails.Text = expense.ShowOverview(TimeSpan.MONTHLY,
+                        this.month);
+                    break;
+                case 1:
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
+                    break;
+                case 2:
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.HOUSE);
+                    break;
+                case 3:
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.LIESURE);
+                    break;
+                case 4:
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.NEEDED);
+                    break;
+
+            }
+        }
         private void monthlyOverviewButton_Click(object sender, EventArgs e)
         {
 
-            monthlyDetails.Text = expense.ShowOverview(TimeSpan.MONTHLY, 
-                this.month);
+
             monthlyChart.Series.Clear();
 
             //Draw the pie chart
@@ -145,23 +167,20 @@ namespace BudgetApp
             string[] parsedDate = monthCalendar1.SelectionStart.ToString().Split('/');
             this.month = Int32.Parse(parsedDate[0]);
             double year = Double.Parse(parsedDate[2].Substring(0, 4));
+            expense.UpdateMonthlyTotals(this.month);
             expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
         }
         private void monthlyFoodButton_Click(object sender, EventArgs e)
         {
-            monthlyDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
         }
         private void monthlyHouseButton_Click(object sender, EventArgs e)
         {
-            monthlyDetails.Text = expense.ShowCategoryDetails(Category.HOUSE);
         }
         private void monthlyLiesureButton_Click(object sender, EventArgs e)
         {
-            monthlyDetails.Text = expense.ShowCategoryDetails(Category.LIESURE);
         }
         private void monthlyNeededButton_Click(object sender, EventArgs e)
         {
-            monthlyDetails.Text = expense.ShowCategoryDetails(Category.NEEDED);
         }
         private void timespanControl_Click(object sender, EventArgs e)
         {
@@ -169,7 +188,6 @@ namespace BudgetApp
             this.month = Int32.Parse(parsedDate[0]);
             double year = Double.Parse(parsedDate[2].Substring(0, 4));
 
-            expense.UpdateMonthlyTotals(this.month);
             expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
         }
         #endregion
@@ -350,10 +368,16 @@ namespace BudgetApp
 
             //allChart.Series[seriesname]["PieLabelStyle"] = "Outside";
         }
+
+
+
+
+
         #endregion
 
+        private void allChart_Click(object sender, EventArgs e)
+        {
 
-
-       
+        }
     }
 }
