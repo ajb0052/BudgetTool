@@ -5,7 +5,7 @@ using System.IO;
 namespace BudgetApp
 {
 
-    public enum Category { FOOD, HOUSE, LIESURE, NEEDED };
+    public enum Category { OVERALL, FOOD, HOUSE, LIESURE, NEEDED }; // using overall winds up adding items to the food dataset somewhere
     public enum TimeSpan { ALL, MONTHLY, YEARLY };
     public enum Month { January = 1, February, March, April, May, June, July, August, September, November, December };
 
@@ -150,14 +150,18 @@ namespace BudgetApp
 
             totalSpent += amount;
         }
-        public string getTotalSpentAsString()
+        public string GetTotalSpentAsString()
         {
             return "Total spent: " + this.totalSpent.ToString("C");
         }
 
-        public string getNetTotalAsString()
+        public string GetNetTotalAsString()
         {
             return "Net total: " + (this.grossIncome - this.totalSpent).ToString("C");
+        }
+        public string GetGrossIncomeAsString()
+        {
+            return "Gross Income: " + this.grossIncome;
         }
         public string UpdateGrossIncome(double grossIncome)
         {
@@ -319,10 +323,17 @@ namespace BudgetApp
             //us by all categories
             string output = "Gross Income: " + this.grossIncome.ToString("C") + "\n";
             output = cat.ToString().ToUpper()+"\n";
-            output += "Name Date Amount\n";
+            output += "Name \t Date \t Amount";
             SortedSet<ExpenseDataPoint> catDataSet = new SortedSet<ExpenseDataPoint>();
             switch (cat)
             {
+                case Category.OVERALL:
+                    //output += "\t Category";
+                    catDataSet = foodDataSet;
+                    catDataSet.UnionWith(houseDataSet);
+                    catDataSet.UnionWith(liesureDataSet);
+                    catDataSet.UnionWith(neededDataSet);
+                    break;
                 case Category.FOOD:
                     catDataSet = foodDataSet;
                     break;
@@ -336,6 +347,7 @@ namespace BudgetApp
                     catDataSet = neededDataSet;
                     break;
             }
+            output += "\n";
             foreach (ExpenseDataPoint point in catDataSet)
             {
                 output += point.name + " " + point.date.ToShortDateString() + " "+ point.amount.ToString("C") + "\n";

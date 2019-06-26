@@ -58,7 +58,7 @@
             this.CategoryMonthlyDetailDropDown = new System.Windows.Forms.ComboBox();
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.monthlyDetails = new System.Windows.Forms.Label();
-            this.monthlyOverviewButton = new System.Windows.Forms.Button();
+            this.updateMonthlyChartButton = new System.Windows.Forms.Button();
             this.monthlyChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.yearlyTab = new System.Windows.Forms.TabPage();
             this.monthCalendar2 = new System.Windows.Forms.MonthCalendar();
@@ -101,6 +101,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.TotalSpent = new System.Windows.Forms.Label();
             this.NetIncome = new System.Windows.Forms.Label();
+            this.overview = new System.Windows.Forms.Label();
             this.timespanControl.SuspendLayout();
             this.allTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.allChart)).BeginInit();
@@ -254,7 +255,7 @@
             this.CategoryAllDetailDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CategoryAllDetailDropDown.FormattingEnabled = true;
             this.CategoryAllDetailDropDown.Items.AddRange(new object[] {
-            "Overview",
+            "Overall",
             "Food",
             "House",
             "Liesure",
@@ -282,14 +283,13 @@
             this.allChart.Size = new System.Drawing.Size(238, 172);
             this.allChart.TabIndex = 0;
             this.allChart.Text = "All";
-            this.allChart.Click += new System.EventHandler(this.allChart_Click);
             // 
             // monthlyTab
             // 
             this.monthlyTab.Controls.Add(this.CategoryMonthlyDetailDropDown);
             this.monthlyTab.Controls.Add(this.monthCalendar1);
             this.monthlyTab.Controls.Add(this.monthlyDetails);
-            this.monthlyTab.Controls.Add(this.monthlyOverviewButton);
+            this.monthlyTab.Controls.Add(this.updateMonthlyChartButton);
             this.monthlyTab.Controls.Add(this.monthlyChart);
             this.monthlyTab.Location = new System.Drawing.Point(4, 22);
             this.monthlyTab.Name = "monthlyTab";
@@ -303,7 +303,7 @@
             this.CategoryMonthlyDetailDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CategoryMonthlyDetailDropDown.FormattingEnabled = true;
             this.CategoryMonthlyDetailDropDown.Items.AddRange(new object[] {
-            "Overview",
+            "Overall",
             "Food",
             "House",
             "Liesure",
@@ -329,15 +329,15 @@
             this.monthlyDetails.TabIndex = 10;
             this.monthlyDetails.Text = "    ";
             // 
-            // monthlyOverviewButton
+            // updateMonthlyChartButton
             // 
-            this.monthlyOverviewButton.Location = new System.Drawing.Point(7, 10);
-            this.monthlyOverviewButton.Name = "monthlyOverviewButton";
-            this.monthlyOverviewButton.Size = new System.Drawing.Size(75, 35);
-            this.monthlyOverviewButton.TabIndex = 8;
-            this.monthlyOverviewButton.Text = "Update Chart";
-            this.monthlyOverviewButton.UseVisualStyleBackColor = true;
-            this.monthlyOverviewButton.Click += new System.EventHandler(this.monthlyOverviewButton_Click);
+            this.updateMonthlyChartButton.Location = new System.Drawing.Point(7, 10);
+            this.updateMonthlyChartButton.Name = "updateMonthlyChartButton";
+            this.updateMonthlyChartButton.Size = new System.Drawing.Size(75, 35);
+            this.updateMonthlyChartButton.TabIndex = 8;
+            this.updateMonthlyChartButton.Text = "Update Chart";
+            this.updateMonthlyChartButton.UseVisualStyleBackColor = true;
+            this.updateMonthlyChartButton.Click += new System.EventHandler(this.updateMonthlyChartButton_Click);
             // 
             // monthlyChart
             // 
@@ -665,7 +665,7 @@
             this.IncomeDisplay.Name = "IncomeDisplay";
             this.IncomeDisplay.Size = new System.Drawing.Size(278, 24);
             this.IncomeDisplay.TabIndex = 19;
-            this.IncomeDisplay.Text = "    ";
+            this.IncomeDisplay.Text = "Gross Income: ";
             // 
             // openFileDialog1
             // 
@@ -673,19 +673,27 @@
             // 
             // TotalSpent
             // 
-            this.TotalSpent.Location = new System.Drawing.Point(352, 72);
+            this.TotalSpent.Location = new System.Drawing.Point(352, 155);
             this.TotalSpent.Name = "TotalSpent";
             this.TotalSpent.Size = new System.Drawing.Size(278, 24);
             this.TotalSpent.TabIndex = 20;
-            this.TotalSpent.Text = "    ";
+            this.TotalSpent.Text = "Total Spent: ";
             // 
             // NetIncome
             // 
-            this.NetIncome.Location = new System.Drawing.Point(352, 89);
+            this.NetIncome.Location = new System.Drawing.Point(352, 179);
             this.NetIncome.Name = "NetIncome";
             this.NetIncome.Size = new System.Drawing.Size(278, 24);
             this.NetIncome.TabIndex = 21;
-            this.NetIncome.Text = "    ";
+            this.NetIncome.Text = "Net Income";
+            // 
+            // overview
+            // 
+            this.overview.Location = new System.Drawing.Point(352, 72);
+            this.overview.Name = "overview";
+            this.overview.Size = new System.Drawing.Size(278, 67);
+            this.overview.TabIndex = 22;
+            this.overview.Text = "Food:\r\nHouse:\r\nLiesure:\r\nNeeded:";
             // 
             // Form1
             // 
@@ -695,6 +703,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.ClientSize = new System.Drawing.Size(928, 458);
+            this.Controls.Add(this.overview);
             this.Controls.Add(this.NetIncome);
             this.Controls.Add(this.TotalSpent);
             this.Controls.Add(this.IncomeDisplay);
@@ -753,7 +762,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart allChart;
         private System.Windows.Forms.TabPage monthlyTab;
         private System.Windows.Forms.DataVisualization.Charting.Chart monthlyChart;
-        private System.Windows.Forms.Button monthlyOverviewButton;
+        private System.Windows.Forms.Button updateMonthlyChartButton;
         private System.Windows.Forms.Button yearlyOverviewButton;
         private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.Label monthlyDetails;
@@ -795,6 +804,7 @@
         private System.Windows.Forms.Label TotalSpent;
         private System.Windows.Forms.Label NetIncome;
         private System.Windows.Forms.ComboBox CategoryMonthlyDetailDropDown;
+        private System.Windows.Forms.Label overview;
     }
 }
 

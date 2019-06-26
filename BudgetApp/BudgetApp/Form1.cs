@@ -68,8 +68,8 @@ namespace BudgetApp
                 }
                 expense.AddExpense(nameInput.Text, amount, dateInput.Value, 
                     catInputEnum);
-                this.TotalSpent.Text = expense.getTotalSpentAsString();
-                this.NetIncome.Text = expense.getNetTotalAsString();
+                this.TotalSpent.Text = expense.GetTotalSpentAsString();
+                this.NetIncome.Text = expense.GetNetTotalAsString();
             }
             catch (Exception)
             {
@@ -108,7 +108,7 @@ namespace BudgetApp
 
             }
         }
-        #endregion
+        #endregion //All
         #region Monthly
         private void CategoryMonthlyDetailDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -133,35 +133,12 @@ namespace BudgetApp
 
             }
         }
-        private void monthlyOverviewButton_Click(object sender, EventArgs e)
+
+        private void updateMonthlyChartButton_Click(object sender, EventArgs e)
         {
-
-
-            monthlyChart.Series.Clear();
-
-            //Draw the pie chart
-            String seriesname = "monthlySeries";
-            monthlyChart.Series.Add(seriesname);
-            monthlyChart.Series[seriesname].ChartType = 
-                System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-
-            monthlyChart.Series[seriesname].Label = "#PERCENT";
-
-            monthlyChart.Series[seriesname].Points.AddXY("Food", 
-                expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY));
-            monthlyChart.Series[seriesname].Points.AddXY("House", 
-                expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY));
-            monthlyChart.Series[seriesname].Points.AddXY("Liesure", 
-                expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY));
-            monthlyChart.Series[seriesname].Points.AddXY("Needed", 
-                expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY));
-
-
-            monthlyChart.Series[seriesname].Points[0].LegendText = "Food";
-            monthlyChart.Series[seriesname].Points[1].LegendText = "House";
-            monthlyChart.Series[seriesname].Points[2].LegendText = "Liesure";
-            monthlyChart.Series[seriesname].Points[3].LegendText = "Needed";
+            DisplayMonthlyPieChart();
         }
+
         private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
             string[] parsedDate = monthCalendar1.SelectionStart.ToString().Split('/');
@@ -170,18 +147,7 @@ namespace BudgetApp
             expense.UpdateMonthlyTotals(this.month);
             expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
         }
-        private void monthlyFoodButton_Click(object sender, EventArgs e)
-        {
-        }
-        private void monthlyHouseButton_Click(object sender, EventArgs e)
-        {
-        }
-        private void monthlyLiesureButton_Click(object sender, EventArgs e)
-        {
-        }
-        private void monthlyNeededButton_Click(object sender, EventArgs e)
-        {
-        }
+
         private void timespanControl_Click(object sender, EventArgs e)
         {
             string[] parsedDate = monthCalendar1.SelectionStart.ToString().Split('/');
@@ -190,7 +156,7 @@ namespace BudgetApp
 
             expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
         }
-        #endregion
+        #endregion //Monthly
         #region File_Management
         private void saveToolMenuItem_Click(object sender, EventArgs e)
         {
@@ -242,20 +208,27 @@ namespace BudgetApp
             openFileDialog1.Title = "Open File";
             openFileDialog1.ShowDialog();
 
-            // Saves the Image via a FileStream created by the OpenFile method.  
-
-            //DESERIALIZE
             try
             {
+
                 var filePath = openFileDialog1.FileName;
-                
-                ////////////    THROWS EXCEPTION WHEN NO FILE IS CHOSEN AND WHEN THE FILE IS EMPTY AND LIKELY WHEN FOR INCORRECT FILE CONTENTS
-                using(FileStream fs = File.Open(filePath, FileMode.Open))
+
+                using (FileStream fs = File.Open(filePath, FileMode.Open))
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
                     expense = (Expenses)formatter.Deserialize(fs);
                     //Update Display
                     this.Text = "Budget Tool - " + openFileDialog1.FileName;
+                    this.IncomeDisplay.Text = expense.GetGrossIncomeAsString();
+                    this.overview.Text = expense.ShowOverview();
+                    this.TotalSpent.Text = expense.GetTotalSpentAsString();
+                    this.NetIncome.Text = expense.GetNetTotalAsString();
+                    allChart.Series.Clear();
+                    DisplayPieChart();
+                    allDetails.Text = expense.ShowOverview();
+                    /*monthlyChart.Series.Clear();
+                    DisplayMonthlyPieChart();
+                    monthlyDetails.Text = expense.ShowOverview(TimeSpan.MONTHLY, this.month);*/ //when added in clicking update chart button clears the chart and does not add it back until populating the details list
                 }
             }
             catch (SerializationException ex)
@@ -263,12 +236,16 @@ namespace BudgetApp
                 MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
                 $"Details:\n\n{ex.StackTrace}");
             }
+            catch (System.ArgumentException ex)
+            {
+
+            }
         }
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
-        #endregion
+        #endregion //File_Management
         #region Pie_Chart_Palette
         private void BrightToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -368,16 +345,40 @@ namespace BudgetApp
 
             //allChart.Series[seriesname]["PieLabelStyle"] = "Outside";
         }
+        private void DisplayMonthlyPieChart()
+        {
+            monthlyChart.Series.Clear();
 
+            //Draw the pie chart
+            String seriesname = "monthlySeries";
+            monthlyChart.Series.Add(seriesname);
+            monthlyChart.Series[seriesname].ChartType =
+                System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+
+            monthlyChart.Series[seriesname].Label = "#PERCENT";
+
+            monthlyChart.Series[seriesname].Points.AddXY("Food",
+                expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY));
+            monthlyChart.Series[seriesname].Points.AddXY("House",
+                expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY));
+            monthlyChart.Series[seriesname].Points.AddXY("Liesure",
+                expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY));
+            monthlyChart.Series[seriesname].Points.AddXY("Needed",
+                expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY));
+
+
+            monthlyChart.Series[seriesname].Points[0].LegendText = "Food";
+            monthlyChart.Series[seriesname].Points[1].LegendText = "House";
+            monthlyChart.Series[seriesname].Points[2].LegendText = "Liesure";
+            monthlyChart.Series[seriesname].Points[3].LegendText = "Needed";
+        }
 
 
 
 
         #endregion
 
-        private void allChart_Click(object sender, EventArgs e)
-        {
 
-        }
+
     }
 }
