@@ -2,26 +2,24 @@ X denotes done
 
 ---Editing Expenses---
 edit expenses: delete, undo, redo
-shortcuts
-menuhelp(list of all shortcuts, about page,)
-remove time from display in table
-add multiple expenses with one click through a table
+add multiple expenses through a table
 New File
 X save
 X open
-clear data by cat or by all
 
 ---Display Changes---
-Table:
+
 Change [name date amount] shold be a table
-change date format
 limit length of item title to 15 letters
 X enter date to view
-
-Chart:
+update when opening a file
 update upon date change
 update upon income update
 update upon added expense
+x remove time from display in table
+add in year feature
+make sure monthly is for just the month of the year(not that month for every year)
+overall should show categories
 
 
 ---Extra Features---
@@ -29,11 +27,14 @@ X resizing page appropriately
 dark mode
 recovery files
 Export file to XML
-Import XML
-import excel
-change pie chart color palette
+Import from XML
+import from excel
+x change pie chart color palette
+change/add/delete up to 7  categories
 create help pages
 quick action bar
 change default save path
 print
-
+Filter to so anything with a certain title is moved to a certain category unless manually changed after
+tutorial pages
+shortcuts

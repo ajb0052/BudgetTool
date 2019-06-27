@@ -48,7 +48,7 @@ namespace BudgetApp
             try
             {
                 double amount = Double.Parse(amountInput.Text);
-                Category catInputEnum = Category.FOOD;
+                Category catInputEnum = Category.OVERALL;
                 switch (categoryInput.SelectedItem.ToString())
                 {
                     case "Food":
@@ -90,9 +90,9 @@ namespace BudgetApp
         {
             switch (CategoryAllDetailDropDown.SelectedIndex)
             {
-                case 0:
-                    allDetails.Text = expense.ShowOverview();
-                    break;
+               /* case 0:
+                    allDetails.Text = expense.ShowCategoryDetails(Category.OVERALL);
+                    break;*/
                 case 1:
                     allDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
                     break;
@@ -115,20 +115,19 @@ namespace BudgetApp
             switch (CategoryMonthlyDetailDropDown.SelectedIndex)
             {
                 case 0:
-                    monthlyDetails.Text = expense.ShowOverview(TimeSpan.MONTHLY,
-                        this.month);
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.OVERALL, TimeSpan.MONTHLY, this.month);
                     break;
                 case 1:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.FOOD, TimeSpan.MONTHLY, this.month);
                     break;
                 case 2:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.HOUSE);
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.HOUSE, TimeSpan.MONTHLY, this.month);
                     break;
                 case 3:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.LIESURE);
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.LIESURE, TimeSpan.MONTHLY, this.month);
                     break;
                 case 4:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.NEEDED);
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.NEEDED, TimeSpan.MONTHLY, this.month);
                     break;
 
             }
@@ -146,6 +145,9 @@ namespace BudgetApp
             double year = Double.Parse(parsedDate[2].Substring(0, 4));
             expense.UpdateMonthlyTotals(this.month);
             expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY);
         }
 
         private void timespanControl_Click(object sender, EventArgs e)
@@ -155,6 +157,9 @@ namespace BudgetApp
             double year = Double.Parse(parsedDate[2].Substring(0, 4));
 
             expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY);
         }
         #endregion //Monthly
         #region File_Management
@@ -225,10 +230,10 @@ namespace BudgetApp
                     this.NetIncome.Text = expense.GetNetTotalAsString();
                     allChart.Series.Clear();
                     DisplayPieChart();
-                    allDetails.Text = expense.ShowOverview();
-                    /*monthlyChart.Series.Clear();
+                    allDetails.Text = expense.ShowCategoryDetails(Category.OVERALL);
+                    
                     DisplayMonthlyPieChart();
-                    monthlyDetails.Text = expense.ShowOverview(TimeSpan.MONTHLY, this.month);*/ //when added in clicking update chart button clears the chart and does not add it back until populating the details list
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.OVERALL); //when added in clicking update chart button clears the chart and does not add it back until populating the details list
                 }
             }
             catch (SerializationException ex)

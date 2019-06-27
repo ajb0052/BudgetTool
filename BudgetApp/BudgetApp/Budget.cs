@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace BudgetApp
 {
 
-    public enum Category { OVERALL, FOOD, HOUSE, LIESURE, NEEDED }; // using overall winds up adding items to the food dataset somewhere
+    public enum Category { OVERALL, FOOD, HOUSE, LIESURE, NEEDED }
     public enum TimeSpan { ALL, MONTHLY, YEARLY };
     public enum Month { January = 1, February, March, April, May, June, July, August, September, November, December };
 
@@ -27,7 +28,7 @@ namespace BudgetApp
         }
     }
     [Serializable]
-    public struct ExpenseDataPoint //: IComparable<ExpenseDataPoint>
+    public struct ExpenseDataPoint : IComparable<ExpenseDataPoint>
     {
         public string name { get; set; }
         public double amount { get; set; }
@@ -37,6 +38,14 @@ namespace BudgetApp
             name = n;
             amount = a;
             date = d;
+        }
+        public int CompareTo(ExpenseDataPoint y)
+        {
+            if (this.date.CompareTo(y.date) == 0)
+            {
+                return this.name.ToUpper().CompareTo(y.name.ToUpper());
+            }
+            return this.date.CompareTo(y.date);
         }
     }
 
@@ -56,8 +65,7 @@ namespace BudgetApp
     [Serializable]
     public class Expenses
     {
-        //wanted to make private fields and methods but couldn't because XML serialization wouldn't allow it.
-        //I'm using xml serialization because it might be on exam.
+
         private SortedSet<ExpenseDataPoint> foodDataSet;
         private double foodTotal;
         private double monthlyFoodTotal;
@@ -161,7 +169,7 @@ namespace BudgetApp
         }
         public string GetGrossIncomeAsString()
         {
-            return "Gross Income: " + this.grossIncome;
+            return "Gross Income: " + this.grossIncome.ToString("C");
         }
         public string UpdateGrossIncome(double grossIncome)
         {
@@ -271,7 +279,16 @@ namespace BudgetApp
             }
         }
 
+        public void UpdateMonthlyDataSets(int month)
+        {
+            foreach (ExpenseDataPoint fData in foodDataSet)
+            {
+                if (fData.date.Month == (int)month)
+                {
 
+                }
+            }
+        }
         /// <summary>
         /// Throws as exception if income is a negative number
         /// Calls UpdateMonthlyTotals if TimeSpan = MONTHLY
@@ -317,7 +334,7 @@ namespace BudgetApp
         }
 
         /* Return: prints out the where the money was spent for one category specified in parameter */
-        public string ShowCategoryDetails(Category cat)
+        public string ShowCategoryDetails(Category cat, TimeSpan tSpan = TimeSpan.ALL, int month = 1)
         {
             //RepeatedCodeFoundIn GetDetailedList
             //us by all categories
@@ -329,22 +346,108 @@ namespace BudgetApp
             {
                 case Category.OVERALL:
                     //output += "\t Category";
-                    catDataSet = foodDataSet;
-                    catDataSet.UnionWith(houseDataSet);
-                    catDataSet.UnionWith(liesureDataSet);
-                    catDataSet.UnionWith(neededDataSet);
+                    if (tSpan == TimeSpan.MONTHLY)
+                    {
+                        foreach (ExpenseDataPoint fData in foodDataSet)
+                        {
+                            if (fData.date.Month == month)
+                            {
+                                catDataSet.Add((ExpenseDataPoint)fData);
+                            }
+                        }
+                        foreach (ExpenseDataPoint fData in houseDataSet)
+                        {
+                            if (fData.date.Month == month)
+                            {
+                                catDataSet.Add((ExpenseDataPoint)fData);
+                            }
+                        }
+                        foreach (ExpenseDataPoint fData in liesureDataSet)
+                        {
+                            if (fData.date.Month == month)
+                            {
+                                catDataSet.Add((ExpenseDataPoint)fData);
+                            }
+                        }
+                        foreach (ExpenseDataPoint fData in neededDataSet)
+                        {
+                            if (fData.date.Month == month)
+                            {
+                                catDataSet.Add((ExpenseDataPoint)fData);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        catDataSet.UnionWith(foodDataSet);
+                        catDataSet.UnionWith(houseDataSet);
+                        catDataSet.UnionWith(liesureDataSet);
+                        catDataSet.UnionWith(neededDataSet);
+                    }
                     break;
                 case Category.FOOD:
-                    catDataSet = foodDataSet;
+                    if (tSpan == TimeSpan.MONTHLY)
+                    {
+                        foreach (ExpenseDataPoint fData in foodDataSet)
+                        {
+                            if (fData.date.Month == month)
+                            {
+                                catDataSet.Add((ExpenseDataPoint)fData);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        catDataSet = foodDataSet;
+                    }
                     break;
                 case Category.HOUSE:
-                    catDataSet = houseDataSet;
+                    if (tSpan == TimeSpan.MONTHLY)
+                    {
+                        foreach (ExpenseDataPoint fData in houseDataSet)
+                        {
+                            if (fData.date.Month == month)
+                            {
+                                catDataSet.Add((ExpenseDataPoint)fData);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        catDataSet = houseDataSet;
+                    }
                     break;
                 case Category.LIESURE:
-                    catDataSet = liesureDataSet;
+                    if (tSpan == TimeSpan.MONTHLY)
+                    {
+                        foreach (ExpenseDataPoint fData in liesureDataSet)
+                        {
+                            if (fData.date.Month == month)
+                            {
+                                catDataSet.Add((ExpenseDataPoint)fData);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        catDataSet = liesureDataSet;
+                    }
                     break;
                 case Category.NEEDED:
-                    catDataSet = neededDataSet;
+                    if (tSpan == TimeSpan.MONTHLY)
+                    {
+                        foreach (ExpenseDataPoint fData in neededDataSet)
+                        {
+                            if (fData.date.Month == month)
+                            {
+                                catDataSet.Add((ExpenseDataPoint)fData);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        catDataSet = neededDataSet;
+                    }
                     break;
             }
             output += "\n";
