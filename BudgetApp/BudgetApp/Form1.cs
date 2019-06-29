@@ -84,15 +84,16 @@ namespace BudgetApp
         private void UpdateChartButton_Click(object sender, EventArgs e)
         {
             allChart.Series.Clear();
+
             DisplayPieChart();
         }
         private void CategoryAllDetailsDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (CategoryAllDetailDropDown.SelectedIndex)
             {
-               /* case 0:
+               case 0:
                     allDetails.Text = expense.ShowCategoryDetails(Category.OVERALL);
-                    break;*/
+                    break;
                 case 1:
                     allDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
                     break;
@@ -137,12 +138,10 @@ namespace BudgetApp
         {
             DisplayMonthlyPieChart();
         }
-
-        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        private void MonthlymonthDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string[] parsedDate = monthCalendar1.SelectionStart.ToString().Split('/');
-            this.month = Int32.Parse(parsedDate[0]);
-            double year = Double.Parse(parsedDate[2].Substring(0, 4));
+            String month = monthlyMonthDropDown.SelectedItem.ToString();
+            this.month = monthlyMonthDropDown.SelectedIndex+1;
             expense.UpdateMonthlyTotals(this.month);
             expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
             expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY);
@@ -150,17 +149,15 @@ namespace BudgetApp
             expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY);
         }
 
+
         private void timespanControl_Click(object sender, EventArgs e)
         {
-            string[] parsedDate = monthCalendar1.SelectionStart.ToString().Split('/');
-            this.month = Int32.Parse(parsedDate[0]);
-            double year = Double.Parse(parsedDate[2].Substring(0, 4));
-
             expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
             expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY);
             expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY);
             expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY);
         }
+       
         #endregion //Monthly
         #region File_Management
         private void saveToolMenuItem_Click(object sender, EventArgs e)
@@ -328,8 +325,8 @@ namespace BudgetApp
             monthlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
             yearlyChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.SeaGreen;
         }
-        #endregion
-        #region Helper_Classes
+        #endregion Pie_Chart_Palette
+        #region Charts
         private void DisplayPieChart()
         {
             String seriesname = "allSeries";
@@ -349,6 +346,14 @@ namespace BudgetApp
             allChart.Series[seriesname].Points[3].LegendText = "Needed";
 
             //allChart.Series[seriesname]["PieLabelStyle"] = "Outside";
+        }
+        private void DisplayAreaChart()
+        {
+
+            String seriesname = "allSeries";
+            allChart.Series.Add(seriesname);
+            allChart.Series[seriesname].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
+            //allChart.Series[seriesname].Label = "#PERCENT";
         }
         private void DisplayMonthlyPieChart()
         {
@@ -379,10 +384,32 @@ namespace BudgetApp
         }
 
 
+        #endregion Charts
+
+        #region Editing
+        //undo
+        //redo
+        //delete expense
+        //add multiple expenses
+        #endregion Editing
+
+        private void AreaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            expense.SetChartType(Chart.Area);
+        }
+
+        private void PieToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void YearlyOverviewButton_Click(object sender, EventArgs e)
+        {
 
 
-        #endregion
+        }
 
+  
 
 
     }

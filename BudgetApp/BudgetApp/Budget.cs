@@ -8,7 +8,9 @@ namespace BudgetApp
 
     public enum Category { OVERALL, FOOD, HOUSE, LIESURE, NEEDED }
     public enum TimeSpan { ALL, MONTHLY, YEARLY };
-    public enum Month { January = 1, February, March, April, May, June, July, August, September, November, December };
+    public enum Month { January = 1, February, March, April, May, June, July, August, September, October, November, December };
+
+    public enum Chart { Pie, Area };
 
 
     class InvalidNetIncomeException : Exception
@@ -86,6 +88,8 @@ namespace BudgetApp
         private double monthlyTotalSpent;
          
         private double grossIncome;// yearly
+
+        private Chart chart;
          
          
         private String expenseListFood;
@@ -96,6 +100,7 @@ namespace BudgetApp
         private String monthlyExpenseListLiesure;
         private String expenseListNeeded;
         private String monthlyExpenseListNeeded;
+
 
         public String filename;
 
@@ -128,6 +133,8 @@ namespace BudgetApp
             this.monthlyExpenseListNeeded = "";
             this.expenseListFood = "";
 
+            this.chart = Chart.Pie;
+
             //this.fileStream = null;
         }
         
@@ -158,11 +165,11 @@ namespace BudgetApp
 
             totalSpent += amount;
         }
+        ///-----------------------------------------------------------------------------------------------------------------------------------------
         public string GetTotalSpentAsString()
         {
             return "Total spent: " + this.totalSpent.ToString("C");
         }
-
         public string GetNetTotalAsString()
         {
             return "Net total: " + (this.grossIncome - this.totalSpent).ToString("C");
@@ -171,13 +178,22 @@ namespace BudgetApp
         {
             return "Gross Income: " + this.grossIncome.ToString("C");
         }
+        public Chart GetChartType()
+        {
+            return chart;
+        }
+
+        public void SetChartType(Chart chart)
+        {
+            this.chart = chart;
+        }
         public string UpdateGrossIncome(double grossIncome)
         {
             this.grossIncome = grossIncome;
             string output = "Gross Income: " + grossIncome.ToString("C") + "\n";
             return output;
         }
-
+        ///-----------------------------------------------------------------------------------------------------------------------------------------
         /* Changes the expense list variables. dependent on the totals and monthly totals having been set */
         public double GetTotalPerCat(Category cat, TimeSpan timeSpan = TimeSpan.ALL)
         {
@@ -210,6 +226,7 @@ namespace BudgetApp
             return total;
         }
 
+        ///-----------------------------------------------------------------------------------------------------------------------------------------
         //Should be called before every occurence of GetTotal where the month is important it also updates category lists
         public void UpdateMonthlyTotals(int month)
         {
@@ -289,14 +306,8 @@ namespace BudgetApp
                 }
             }
         }
-        /// <summary>
-        /// Throws as exception if income is a negative number
-        /// Calls UpdateMonthlyTotals if TimeSpan = MONTHLY
-        /// </summary>
-        /// <param name="timeSpanParam"></param>
-        /// <param name="month"></param>
-        /// <param name="year"></param>
-        /// <returns>overview of all money spent in a string</returns>
+        ///-----------------------------------------------------------------------------------------------------------------------------------------
+
         public string ShowOverview(TimeSpan timeSpanParam = TimeSpan.ALL, int month = 1, double year = 2018)
         {
             string output = "";
@@ -304,13 +315,13 @@ namespace BudgetApp
 
             if (timeSpanParam == TimeSpan.ALL)
             {
-                output += "Gross Income: " + grossIncome.ToString("C") + "\n";
-                output += "\n";
+                //output += "Gross Income: " + grossIncome.ToString("C") + "\n";
+                //output += "\n";
                 output += "Food: " + foodTotal.ToString("C") + "\n";
                 output += "House: " + houseTotal.ToString("C") + "\n";
                 output += "Liesure: " + liesureTotal.ToString("C") + "\n";
                 output += "Needed: " + neededTotal.ToString("C") + "\n";
-                output += "Net Income: " + (this.grossIncome - this.totalSpent).ToString("C");
+                //output += "Net Income: " + (this.grossIncome - this.totalSpent).ToString("C");
 
             }
             else if(timeSpanParam == TimeSpan.MONTHLY)
@@ -318,13 +329,13 @@ namespace BudgetApp
                 double monthlyGrossIncome = grossIncome / 12;
                 UpdateMonthlyTotals(month);
 
-                output += "Monthly Gross Income: " + (grossIncome/12).ToString("C") + "\n";
-                output += "Expenses during the month of " + (Month)month + "\n";
+               // output += "Monthly Gross Income: " + (grossIncome/12).ToString("C") + "\n";
+                //output += "Expenses during the month of " + (Month)month + "\n";
                 output += "Food: " + monthlyFoodTotal.ToString("C") + "\n";
                 output += "House: " + monthlyHouseTotal.ToString("C") + "\n";
                 output += "Liesure: " + monthlyLiesureTotal.ToString("C") + "\n";
                 output += "Needed: " + monthlyNeededTotal.ToString("C") + "\n";
-                output += "Net Income: " + (monthlyGrossIncome- this.monthlyTotalSpent).ToString("C");
+                //output += "Net Income: " + (monthlyGrossIncome- this.monthlyTotalSpent).ToString("C");
             }
             else if(timeSpanParam == TimeSpan.YEARLY)
             {

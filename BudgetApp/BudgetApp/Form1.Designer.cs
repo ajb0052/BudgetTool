@@ -55,13 +55,12 @@
             this.CategoryAllDetailDropDown = new System.Windows.Forms.ComboBox();
             this.allChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.monthlyTab = new System.Windows.Forms.TabPage();
+            this.monthlyMonthDropDown = new System.Windows.Forms.ComboBox();
             this.CategoryMonthlyDetailDropDown = new System.Windows.Forms.ComboBox();
-            this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.monthlyDetails = new System.Windows.Forms.Label();
             this.updateMonthlyChartButton = new System.Windows.Forms.Button();
             this.monthlyChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.yearlyTab = new System.Windows.Forms.TabPage();
-            this.monthCalendar2 = new System.Windows.Forms.MonthCalendar();
             this.label7 = new System.Windows.Forms.Label();
             this.yearlyOverviewButton = new System.Windows.Forms.Button();
             this.yearlyChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -82,6 +81,7 @@
             this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addMultipleExpensesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addDeleteCategoriesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viiewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pieChartPalatteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.brightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,6 +95,9 @@
             this.chocolateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fireToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.seaGreenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chartTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.areaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.IncomeDisplay = new System.Windows.Forms.Label();
             this.saveAsDialog = new System.Windows.Forms.SaveFileDialog();
@@ -102,6 +105,7 @@
             this.TotalSpent = new System.Windows.Forms.Label();
             this.NetIncome = new System.Windows.Forms.Label();
             this.overview = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.timespanControl.SuspendLayout();
             this.allTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.allChart)).BeginInit();
@@ -118,7 +122,7 @@
             this.IncomeUpdateButton.Location = new System.Drawing.Point(229, 49);
             this.IncomeUpdateButton.Name = "IncomeUpdateButton";
             this.IncomeUpdateButton.Size = new System.Drawing.Size(100, 23);
-            this.IncomeUpdateButton.TabIndex = 0;
+            this.IncomeUpdateButton.TabIndex = 1;
             this.IncomeUpdateButton.Tag = "Update Income";
             this.IncomeUpdateButton.Text = "Update Income";
             this.IncomeUpdateButton.UseVisualStyleBackColor = false;
@@ -129,13 +133,13 @@
             this.incomeTextBox.Location = new System.Drawing.Point(123, 52);
             this.incomeTextBox.Name = "incomeTextBox";
             this.incomeTextBox.Size = new System.Drawing.Size(100, 20);
-            this.incomeTextBox.TabIndex = 1;
+            this.incomeTextBox.TabIndex = 0;
             // 
             // allDetails
             // 
-            this.allDetails.Location = new System.Drawing.Point(332, 10);
+            this.allDetails.Location = new System.Drawing.Point(648, 10);
             this.allDetails.Name = "allDetails";
-            this.allDetails.Size = new System.Drawing.Size(278, 152);
+            this.allDetails.Size = new System.Drawing.Size(211, 172);
             this.allDetails.TabIndex = 2;
             this.allDetails.Text = "    ";
             // 
@@ -156,7 +160,7 @@
             this.button2.Location = new System.Drawing.Point(229, 177);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 23);
-            this.button2.TabIndex = 4;
+            this.button2.TabIndex = 6;
             this.button2.Text = "Add Expense";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.AddExpense_Click);
@@ -166,14 +170,14 @@
             this.amountInput.Location = new System.Drawing.Point(123, 97);
             this.amountInput.Name = "amountInput";
             this.amountInput.Size = new System.Drawing.Size(100, 20);
-            this.amountInput.TabIndex = 6;
+            this.amountInput.TabIndex = 2;
             // 
             // nameInput
             // 
             this.nameInput.Location = new System.Drawing.Point(123, 123);
             this.nameInput.Name = "nameInput";
             this.nameInput.Size = new System.Drawing.Size(100, 20);
-            this.nameInput.TabIndex = 7;
+            this.nameInput.TabIndex = 3;
             // 
             // label1
             // 
@@ -277,14 +281,14 @@
             series1.Legend = "Legend1";
             series1.Name = "allSeries";
             this.allChart.Series.Add(series1);
-            this.allChart.Size = new System.Drawing.Size(238, 172);
+            this.allChart.Size = new System.Drawing.Size(487, 172);
             this.allChart.TabIndex = 0;
             this.allChart.Text = "All";
             // 
             // monthlyTab
             // 
+            this.monthlyTab.Controls.Add(this.monthlyMonthDropDown);
             this.monthlyTab.Controls.Add(this.CategoryMonthlyDetailDropDown);
-            this.monthlyTab.Controls.Add(this.monthCalendar1);
             this.monthlyTab.Controls.Add(this.monthlyDetails);
             this.monthlyTab.Controls.Add(this.updateMonthlyChartButton);
             this.monthlyTab.Controls.Add(this.monthlyChart);
@@ -294,6 +298,28 @@
             this.monthlyTab.TabIndex = 2;
             this.monthlyTab.Text = "Monthly";
             this.monthlyTab.UseVisualStyleBackColor = true;
+            // 
+            // monthlyMonthDropDown
+            // 
+            this.monthlyMonthDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.monthlyMonthDropDown.FormattingEnabled = true;
+            this.monthlyMonthDropDown.Items.AddRange(new object[] {
+            "January ",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "November",
+            "December"});
+            this.monthlyMonthDropDown.Location = new System.Drawing.Point(7, 78);
+            this.monthlyMonthDropDown.Name = "monthlyMonthDropDown";
+            this.monthlyMonthDropDown.Size = new System.Drawing.Size(75, 21);
+            this.monthlyMonthDropDown.TabIndex = 13;
+            this.monthlyMonthDropDown.SelectedIndexChanged += new System.EventHandler(this.MonthlymonthDropDown_SelectedIndexChanged);
             // 
             // CategoryMonthlyDetailDropDown
             // 
@@ -311,18 +337,11 @@
             this.CategoryMonthlyDetailDropDown.TabIndex = 12;
             this.CategoryMonthlyDetailDropDown.SelectedIndexChanged += new System.EventHandler(this.CategoryMonthlyDetailDropDown_SelectedIndexChanged);
             // 
-            // monthCalendar1
-            // 
-            this.monthCalendar1.Location = new System.Drawing.Point(620, 10);
-            this.monthCalendar1.Name = "monthCalendar1";
-            this.monthCalendar1.TabIndex = 11;
-            this.monthCalendar1.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar1_DateChanged);
-            // 
             // monthlyDetails
             // 
-            this.monthlyDetails.Location = new System.Drawing.Point(332, 10);
+            this.monthlyDetails.Location = new System.Drawing.Point(645, 10);
             this.monthlyDetails.Name = "monthlyDetails";
-            this.monthlyDetails.Size = new System.Drawing.Size(278, 152);
+            this.monthlyDetails.Size = new System.Drawing.Size(211, 172);
             this.monthlyDetails.TabIndex = 10;
             this.monthlyDetails.Text = "    ";
             // 
@@ -349,13 +368,12 @@
             series2.Legend = "Legend1";
             series2.Name = "monthlySeries";
             this.monthlyChart.Series.Add(series2);
-            this.monthlyChart.Size = new System.Drawing.Size(238, 172);
+            this.monthlyChart.Size = new System.Drawing.Size(487, 172);
             this.monthlyChart.TabIndex = 1;
             this.monthlyChart.Text = "Monthly";
             // 
             // yearlyTab
             // 
-            this.yearlyTab.Controls.Add(this.monthCalendar2);
             this.yearlyTab.Controls.Add(this.label7);
             this.yearlyTab.Controls.Add(this.yearlyOverviewButton);
             this.yearlyTab.Controls.Add(this.yearlyChart);
@@ -367,15 +385,9 @@
             this.yearlyTab.Text = "Yearly";
             this.yearlyTab.UseVisualStyleBackColor = true;
             // 
-            // monthCalendar2
-            // 
-            this.monthCalendar2.Location = new System.Drawing.Point(620, 10);
-            this.monthCalendar2.Name = "monthCalendar2";
-            this.monthCalendar2.TabIndex = 11;
-            // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(326, 10);
+            this.label7.Location = new System.Drawing.Point(591, 10);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(278, 152);
             this.label7.TabIndex = 10;
@@ -389,6 +401,7 @@
             this.yearlyOverviewButton.TabIndex = 8;
             this.yearlyOverviewButton.Text = "Chart";
             this.yearlyOverviewButton.UseVisualStyleBackColor = true;
+            this.yearlyOverviewButton.Click += new System.EventHandler(this.YearlyOverviewButton_Click);
             // 
             // yearlyChart
             // 
@@ -399,11 +412,11 @@
             this.yearlyChart.Location = new System.Drawing.Point(88, 10);
             this.yearlyChart.Name = "yearlyChart";
             series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Area;
             series3.Legend = "Legend1";
             series3.Name = "Series1";
             this.yearlyChart.Series.Add(series3);
-            this.yearlyChart.Size = new System.Drawing.Size(238, 172);
+            this.yearlyChart.Size = new System.Drawing.Size(479, 172);
             this.yearlyChart.TabIndex = 0;
             this.yearlyChart.Text = "chart2";
             // 
@@ -420,14 +433,14 @@
             this.categoryInput.Location = new System.Drawing.Point(123, 179);
             this.categoryInput.Name = "categoryInput";
             this.categoryInput.Size = new System.Drawing.Size(100, 21);
-            this.categoryInput.TabIndex = 15;
+            this.categoryInput.TabIndex = 5;
             // 
             // dateInput
             // 
             this.dateInput.Location = new System.Drawing.Point(123, 149);
             this.dateInput.Name = "dateInput";
             this.dateInput.Size = new System.Drawing.Size(206, 20);
-            this.dateInput.TabIndex = 16;
+            this.dateInput.TabIndex = 4;
             // 
             // menuStrip1
             // 
@@ -524,7 +537,8 @@
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.undoToolStripMenuItem,
             this.redoToolStripMenuItem,
-            this.addMultipleExpensesToolStripMenuItem});
+            this.addMultipleExpensesToolStripMenuItem,
+            this.addDeleteCategoriesToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -547,10 +561,17 @@
             this.addMultipleExpensesToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
             this.addMultipleExpensesToolStripMenuItem.Text = "Add Multiple Expenses...";
             // 
+            // addDeleteCategoriesToolStripMenuItem
+            // 
+            this.addDeleteCategoriesToolStripMenuItem.Name = "addDeleteCategoriesToolStripMenuItem";
+            this.addDeleteCategoriesToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.addDeleteCategoriesToolStripMenuItem.Text = "Add/Delete Categories...";
+            // 
             // viiewToolStripMenuItem
             // 
             this.viiewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pieChartPalatteToolStripMenuItem});
+            this.pieChartPalatteToolStripMenuItem,
+            this.chartTypeToolStripMenuItem});
             this.viiewToolStripMenuItem.Name = "viiewToolStripMenuItem";
             this.viiewToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.viiewToolStripMenuItem.Text = "Settings";
@@ -650,6 +671,29 @@
             this.seaGreenToolStripMenuItem.Text = "SeaGreen";
             this.seaGreenToolStripMenuItem.Click += new System.EventHandler(this.SeaGreenToolStripMenuItem_Click);
             // 
+            // chartTypeToolStripMenuItem
+            // 
+            this.chartTypeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pieToolStripMenuItem,
+            this.areaToolStripMenuItem});
+            this.chartTypeToolStripMenuItem.Name = "chartTypeToolStripMenuItem";
+            this.chartTypeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.chartTypeToolStripMenuItem.Text = "Chart Type";
+            // 
+            // pieToolStripMenuItem
+            // 
+            this.pieToolStripMenuItem.Name = "pieToolStripMenuItem";
+            this.pieToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.pieToolStripMenuItem.Text = "Pie";
+            this.pieToolStripMenuItem.Click += new System.EventHandler(this.PieToolStripMenuItem_Click);
+            // 
+            // areaToolStripMenuItem
+            // 
+            this.areaToolStripMenuItem.Name = "areaToolStripMenuItem";
+            this.areaToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.areaToolStripMenuItem.Text = "Area";
+            this.areaToolStripMenuItem.Click += new System.EventHandler(this.AreaToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
@@ -680,7 +724,7 @@
             // 
             this.NetIncome.Location = new System.Drawing.Point(352, 179);
             this.NetIncome.Name = "NetIncome";
-            this.NetIncome.Size = new System.Drawing.Size(278, 24);
+            this.NetIncome.Size = new System.Drawing.Size(278, 12);
             this.NetIncome.TabIndex = 21;
             this.NetIncome.Text = "Net Income";
             // 
@@ -691,6 +735,14 @@
             this.overview.Size = new System.Drawing.Size(278, 67);
             this.overview.TabIndex = 22;
             this.overview.Text = "Food:\r\nHouse:\r\nLiesure:\r\nNeeded:";
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.Location = new System.Drawing.Point(335, 41);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(318, 159);
+            this.panel1.TabIndex = 23;
             // 
             // Form1
             // 
@@ -718,6 +770,7 @@
             this.Controls.Add(this.incomeTextBox);
             this.Controls.Add(this.IncomeUpdateButton);
             this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
@@ -761,9 +814,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart monthlyChart;
         private System.Windows.Forms.Button updateMonthlyChartButton;
         private System.Windows.Forms.Button yearlyOverviewButton;
-        private System.Windows.Forms.MonthCalendar monthCalendar1;
         private System.Windows.Forms.Label monthlyDetails;
-        private System.Windows.Forms.MonthCalendar monthCalendar2;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -802,6 +853,12 @@
         private System.Windows.Forms.Label NetIncome;
         private System.Windows.Forms.ComboBox CategoryMonthlyDetailDropDown;
         private System.Windows.Forms.Label overview;
+        private System.Windows.Forms.ToolStripMenuItem chartTypeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pieToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem areaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addDeleteCategoriesToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.ComboBox monthlyMonthDropDown;
     }
 }
 
