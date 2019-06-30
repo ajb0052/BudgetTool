@@ -174,9 +174,9 @@ namespace BudgetApp
         {
             return "Net total: " + (this.grossIncome - this.totalSpent).ToString("C");
         }
-        public string GetGrossIncomeAsString()
+        public double GetGrossIncome()
         {
-            return "Gross Income: " + this.grossIncome.ToString("C");
+            return this.grossIncome;
         }
         public Chart GetChartType()
         {

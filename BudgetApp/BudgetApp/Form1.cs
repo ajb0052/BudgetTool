@@ -34,7 +34,7 @@ namespace BudgetApp
             {
                 double input = Double.Parse(incomeTextBox.Text);
                 String incomeOutput = expense.UpdateGrossIncome(input);
-                IncomeDisplay.Text = incomeOutput;
+                yearlyIncome.Text = incomeOutput;
             }
             catch (Exception)
             {
@@ -68,8 +68,8 @@ namespace BudgetApp
                 }
                 expense.AddExpense(nameInput.Text, amount, dateInput.Value, 
                     catInputEnum);
-                this.TotalSpent.Text = expense.GetTotalSpentAsString();
-                this.NetIncome.Text = expense.GetNetTotalAsString();
+                this.yearlyTotalSpent.Text = expense.GetTotalSpentAsString();
+                this.yearlyNetIncome.Text = expense.GetNetTotalAsString();
             }
             catch (Exception)
             {
@@ -219,18 +219,34 @@ namespace BudgetApp
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
                     expense = (Expenses)formatter.Deserialize(fs);
-                    //Update Display
                     this.Text = "Budget Tool - " + openFileDialog1.FileName;
-                    this.IncomeDisplay.Text = expense.GetGrossIncomeAsString();
-                    this.overview.Text = expense.ShowOverview();
-                    this.TotalSpent.Text = expense.GetTotalSpentAsString();
-                    this.NetIncome.Text = expense.GetNetTotalAsString();
+                    //Update Yearly Display
+                    this.yearLabel.Text = DateTime.Now.Year.ToString();
+                    this.yearlyIncome.Text = "Gross Income: " + expense.GetGrossIncome().ToString("C");
+                    this.overallTotals.Text = expense.ShowOverview();
+                    this.yearlyTotalSpent.Text = expense.GetTotalSpentAsString();
+                    this.yearlyNetIncome.Text = expense.GetNetTotalAsString();
                     allChart.Series.Clear();
                     DisplayPieChart();
                     allDetails.Text = expense.ShowCategoryDetails(Category.OVERALL);
-                    
+
+                    //Update Monthly Display
+                    int currentMonth = DateTime.Now.Month;
+                    expense.UpdateMonthlyTotals(currentMonth);
                     DisplayMonthlyPieChart();
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.OVERALL); //when added in clicking update chart button clears the chart and does not add it back until populating the details list
+                    this.monthLabel.Text = ((Month)currentMonth).ToString();
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.OVERALL);
+                    this.monthlyIncome.Text = "Gross Income: " + (expense.GetGrossIncome() / 12.00).ToString("C");
+                    this.monthlyTotals.Text = expense.ShowOverview(TimeSpan.MONTHLY, currentMonth);
+                    expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
+                    expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY);
+                    expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY);
+                    expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY);
+                    this.monthlyTotalSpent.Text = (expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY)
+                        + expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY)
+                        + expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY)
+                        + expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY)).ToString("C");
+                    this.monthlyNetIncome.Text = expense.GetNetTotalAsString();
                 }
             }
             catch (SerializationException ex)
@@ -409,8 +425,9 @@ namespace BudgetApp
 
         }
 
-  
+        private void SplitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
 
-
+        }
     }
 }
