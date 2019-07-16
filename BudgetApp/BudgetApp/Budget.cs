@@ -6,7 +6,7 @@ using System.Linq;
 namespace BudgetApp
 {
 
-    public enum Category { OVERALL, FOOD, HOUSE, LIESURE, NEEDED }
+    public enum Category { OVERALL, CAT1, CAT2, CAT3, CAT4, CAT5, CAT6, CAT7 };
     public enum TimeSpan { ALL, MONTHLY, YEARLY };
     public enum Month { January = 1, February, March, April, May, June, July, August, September, October, November, December };
 
@@ -50,7 +50,7 @@ namespace BudgetApp
             return this.date.CompareTo(y.date);
         }
     }
-
+  
     [Serializable]
     class ExpenseDataPointComparer : IComparer<ExpenseDataPoint>
     {
@@ -65,28 +65,46 @@ namespace BudgetApp
     }
 
     [Serializable]
+    public class CategoryData
+    {
+        public string name;
+        public SortedSet<ExpenseDataPoint> setOfExpenses;
+        public double total;
+        public double monthlyTotal;
+        public CategoryData(string Name)
+        {
+            name = Name;
+            setOfExpenses = new SortedSet<ExpenseDataPoint>();
+            total = 0;
+            monthlyTotal = 0;
+        }
+        
+    }
+    [Serializable]
     public class Expenses
     {
+        //
 
-        private SortedSet<ExpenseDataPoint> foodDataSet;
-        private double foodTotal;
-        private double monthlyFoodTotal;
-         
         private SortedSet<ExpenseDataPoint> houseDataSet;
         private double houseTotal;
         private double monthlyHouseTotal;
-         
+
         private SortedSet<ExpenseDataPoint> liesureDataSet;
         private double liesureTotal;
         private double monthlyLiesureTotal;
-         
+
         private SortedSet<ExpenseDataPoint> neededDataSet;
         private double neededTotal;
         private double monthlyNeededTotal;
-         
+        //
+        private CategoryData cat1;
+        private CategoryData cat2;
+        private CategoryData cat3;
+        private CategoryData cat4;
+        //
+        //
         private double totalSpent;
         private double monthlyTotalSpent;
-         
         private double grossIncome;// yearly
 
         private Chart chart;
@@ -103,25 +121,22 @@ namespace BudgetApp
 
 
         public String filename;
-
+        public string[] categories;
 
         /* Contructor gives default values upon instantiation */
         public Expenses()
         {
-            this.foodTotal = 0;
-            this.monthlyFoodTotal = 0;
-            this.foodDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
-            this.houseTotal = 0;
-            this.monthlyHouseTotal = 0;
-            this.houseDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
-            this.liesureTotal = 0;
-            this.monthlyLiesureTotal = 0;
-            this.liesureDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
-            this.neededTotal = 0;
-            this.monthlyNeededTotal = 0;
-            this.neededDataSet = new SortedSet<ExpenseDataPoint>(new ExpenseDataPointComparer());
+            //
+            
             this.totalSpent = 0;
             this.monthlyTotalSpent = 0;
+            //
+            this.cat1 = new CategoryData("food");
+            this.cat2 = new CategoryData("house");
+            this.cat3 = new CategoryData("liesure");
+            this.cat4 = new CategoryData("needed");
+            //
+
             this.grossIncome = 0;
             
             this.monthlyExpenseListFood = "";
@@ -133,33 +148,41 @@ namespace BudgetApp
             this.monthlyExpenseListNeeded = "";
             this.expenseListFood = "";
 
+
+
             this.chart = Chart.Pie;
 
-            //this.fileStream = null;
+            //temp 
+            categories = new String[8];
+            this.categories[0] = "overall";
+            this.categories[1] = "food";
+            this.categories[2] = "house";
+            this.categories[3] = "liesure";
+            this.categories[4] = "needed";
         }
         
         /* Gets details on an expense made and updates the corresponding set and totals */
         public void AddExpense(string name, double amount, DateTime date, Category category)
         {
             ExpenseDataPoint dataPoint = new ExpenseDataPoint(name, amount, date);
-            
+
             switch (category)
             {
-                case Category.FOOD:
-                    this.foodTotal += amount;
-                    this.foodDataSet.Add(dataPoint);
+                case Category.CAT1:
+                    this.cat1.total += amount;
+                    this.cat1.setOfExpenses.Add(dataPoint);
                     break;
-                case Category.HOUSE:
-                    this.houseTotal += amount;
-                    this.houseDataSet.Add(dataPoint);
+                case Category.CAT2:
+                    this.cat2.total += amount;
+                    this.cat2.setOfExpenses.Add(dataPoint);
                     break;
-                case Category.LIESURE:
-                    this.liesureTotal += amount;
-                    this.liesureDataSet.Add(dataPoint);
+                case Category.CAT3:
+                    this.cat3.total += amount;
+                    this.cat3.setOfExpenses.Add(dataPoint);
                     break;
-                case Category.NEEDED:
-                    this.neededTotal += amount;
-                    this.neededDataSet.Add(dataPoint);
+                case Category.CAT4:
+                    this.cat4.total += amount;
+                    this.cat4.setOfExpenses.Add(dataPoint);
                     break;
             }
 
@@ -202,21 +225,21 @@ namespace BudgetApp
             
             switch (cat)
             {
-                case Category.FOOD:
-                    total = this.foodTotal;
-                    monthlyTotal = this.monthlyFoodTotal;
+                case Category.CAT1:
+                    total = this.cat1.total;
+                    monthlyTotal = this.cat1.monthlyTotal;
                     break;
-                case Category.HOUSE:
-                    total = this.houseTotal;
-                    monthlyTotal = this.monthlyHouseTotal;
+                case Category.CAT2:
+                    total = this.cat2.total;
+                    monthlyTotal = this.cat2.monthlyTotal;
                     break;
-                case Category.LIESURE:
-                    total = this.liesureTotal;
-                    monthlyTotal = this.monthlyLiesureTotal;
+                case Category.CAT3:
+                    total = this.cat3.total;
+                    monthlyTotal = this.cat3.monthlyTotal;
                     break;
-                case Category.NEEDED:
-                    total = this.neededTotal;
-                    monthlyTotal = this.monthlyNeededTotal;
+                case Category.CAT4:
+                    total = this.cat4.total;
+                    monthlyTotal = this.cat4.monthlyTotal;
                     break;
                 default:
                     break;
@@ -232,21 +255,21 @@ namespace BudgetApp
         {
             string[] expenseDateParsed;
 
-            monthlyFoodTotal = 0;
-            monthlyHouseTotal = 0;
-            monthlyLiesureTotal = 0;
-            monthlyNeededTotal = 0;
+            cat1.monthlyTotal = 0;
+            cat2.monthlyTotal = 0;
+            cat3.monthlyTotal = 0;
+            cat4.monthlyTotal = 0;
             monthlyTotalSpent = 0;
 
             expenseListFood = "";
             //cycles through expense set in order to update expense lists and monthly totals
-            foreach (ExpenseDataPoint expense in foodDataSet)
+            foreach (ExpenseDataPoint expense in cat1.setOfExpenses)
             {
                 expenseDateParsed = expense.date.ToString().Split('/');
                 int expenseMonth = Int32.Parse(expenseDateParsed[0]);
                 if (expenseMonth == month)
                 {
-                    monthlyFoodTotal += expense.amount;
+                    cat1.monthlyTotal += expense.amount;
                     monthlyTotalSpent += expense.amount;
                     monthlyExpenseListFood += expense.ToString() + "\n";
                 }
@@ -254,13 +277,13 @@ namespace BudgetApp
             }
 
             expenseListHouse = "";
-            foreach (ExpenseDataPoint expense in houseDataSet)
+            foreach (ExpenseDataPoint expense in cat2.setOfExpenses)
             {
                 expenseDateParsed = expense.date.ToString().Split('/');
                 int expenseMonth = Int32.Parse(expenseDateParsed[0]);
                 if (expenseMonth == month)
                 {
-                    monthlyHouseTotal += expense.amount;
+                    cat2.monthlyTotal += expense.amount;
                     monthlyTotalSpent += expense.amount;
                     monthlyExpenseListHouse += expense.ToString() + "\n";
                 }
@@ -268,13 +291,13 @@ namespace BudgetApp
             }
 
             expenseListLiesure = "";
-            foreach (ExpenseDataPoint expense in liesureDataSet)
+            foreach (ExpenseDataPoint expense in cat3.setOfExpenses)
             {
                 expenseDateParsed = expense.date.ToString().Split('/');
                 int expenseMonth = Int32.Parse(expenseDateParsed[0]);
                 if (expenseMonth == (int)month)
                 {
-                    monthlyLiesureTotal += expense.amount;
+                    cat3.monthlyTotal += expense.amount;
                     monthlyTotalSpent += expense.amount;
                     monthlyExpenseListLiesure += expense.ToString() + "\n";
                 }
@@ -282,13 +305,13 @@ namespace BudgetApp
             }
 
             expenseListNeeded = "";
-            foreach (ExpenseDataPoint expense in neededDataSet)
+            foreach (ExpenseDataPoint expense in cat4.setOfExpenses)
             {
                 expenseDateParsed = expense.date.ToString().Split('/');
                 int expenseMonth = Int32.Parse(expenseDateParsed[0]);
                 if (expenseMonth == (int)month)
                 {
-                    monthlyNeededTotal += expense.amount;
+                    cat4.monthlyTotal += expense.amount;
                     monthlyTotalSpent += expense.amount;
                     monthlyExpenseListNeeded += expense.ToString() + "\n";
                 }
@@ -298,7 +321,7 @@ namespace BudgetApp
 
         public void UpdateMonthlyDataSets(int month)
         {
-            foreach (ExpenseDataPoint fData in foodDataSet)
+            foreach (ExpenseDataPoint fData in cat1.setOfExpenses)
             {
                 if (fData.date.Month == (int)month)
                 {
@@ -317,10 +340,10 @@ namespace BudgetApp
             {
                 //output += "Gross Income: " + grossIncome.ToString("C") + "\n";
                 //output += "\n";
-                output += "Food: " + foodTotal.ToString("C") + "\n";
-                output += "House: " + houseTotal.ToString("C") + "\n";
-                output += "Liesure: " + liesureTotal.ToString("C") + "\n";
-                output += "Needed: " + neededTotal.ToString("C") + "\n";
+                output += "Food: " + cat1.total.ToString("C") + "\n";
+                output += "House: " + cat2.total.ToString("C") + "\n";
+                output += "Liesure: " + cat3.total.ToString("C") + "\n";
+                output += "Needed: " + cat4.total.ToString("C") + "\n";
                 //output += "Net Income: " + (this.grossIncome - this.totalSpent).ToString("C");
 
             }
@@ -331,10 +354,10 @@ namespace BudgetApp
 
                // output += "Monthly Gross Income: " + (grossIncome/12).ToString("C") + "\n";
                 //output += "Expenses during the month of " + (Month)month + "\n";
-                output += "Food: " + monthlyFoodTotal.ToString("C") + "\n";
-                output += "House: " + monthlyHouseTotal.ToString("C") + "\n";
-                output += "Liesure: " + monthlyLiesureTotal.ToString("C") + "\n";
-                output += "Needed: " + monthlyNeededTotal.ToString("C") + "\n";
+                output += "Food: " + cat1.monthlyTotal.ToString("C") + "\n";
+                output += "House: " + cat2.monthlyTotal.ToString("C") + "\n";
+                output += "Liesure: " + cat3.monthlyTotal.ToString("C") + "\n";
+                output += "Needed: " + cat4.monthlyTotal.ToString("C") + "\n";
                 //output += "Net Income: " + (monthlyGrossIncome- this.monthlyTotalSpent).ToString("C");
             }
             else if(timeSpanParam == TimeSpan.YEARLY)
@@ -347,10 +370,12 @@ namespace BudgetApp
         /* Return: prints out the where the money was spent for one category specified in parameter */
         public string ShowCategoryDetails(Category cat, TimeSpan tSpan = TimeSpan.ALL, int month = 1)
         {
+            int catInt = (int)cat;
+            string catString = this.categories[0];
             //RepeatedCodeFoundIn GetDetailedList
             //us by all categories
             string output = "Gross Income: " + this.grossIncome.ToString("C") + "\n";
-            output = cat.ToString().ToUpper()+"\n";
+            output = catString+"\n";
             output += "Name \t Date \t Amount";
             SortedSet<ExpenseDataPoint> catDataSet = new SortedSet<ExpenseDataPoint>();
             switch (cat)
@@ -359,28 +384,28 @@ namespace BudgetApp
                     //output += "\t Category";
                     if (tSpan == TimeSpan.MONTHLY)
                     {
-                        foreach (ExpenseDataPoint fData in foodDataSet)
+                        foreach (ExpenseDataPoint fData in cat1.setOfExpenses)
                         {
                             if (fData.date.Month == month)
                             {
                                 catDataSet.Add((ExpenseDataPoint)fData);
                             }
                         }
-                        foreach (ExpenseDataPoint fData in houseDataSet)
+                        foreach (ExpenseDataPoint fData in cat2.setOfExpenses)
                         {
                             if (fData.date.Month == month)
                             {
                                 catDataSet.Add((ExpenseDataPoint)fData);
                             }
                         }
-                        foreach (ExpenseDataPoint fData in liesureDataSet)
+                        foreach (ExpenseDataPoint fData in cat3.setOfExpenses)
                         {
                             if (fData.date.Month == month)
                             {
                                 catDataSet.Add((ExpenseDataPoint)fData);
                             }
                         }
-                        foreach (ExpenseDataPoint fData in neededDataSet)
+                        foreach (ExpenseDataPoint fData in cat4.setOfExpenses)
                         {
                             if (fData.date.Month == month)
                             {
@@ -390,16 +415,16 @@ namespace BudgetApp
                     }
                     else
                     {
-                        catDataSet.UnionWith(foodDataSet);
-                        catDataSet.UnionWith(houseDataSet);
-                        catDataSet.UnionWith(liesureDataSet);
-                        catDataSet.UnionWith(neededDataSet);
+                        catDataSet.UnionWith(cat1.setOfExpenses);
+                        catDataSet.UnionWith(cat2.setOfExpenses);
+                        catDataSet.UnionWith(cat3.setOfExpenses);
+                        catDataSet.UnionWith(cat4.setOfExpenses);
                     }
                     break;
-                case Category.FOOD:
+                case Category.CAT1:
                     if (tSpan == TimeSpan.MONTHLY)
                     {
-                        foreach (ExpenseDataPoint fData in foodDataSet)
+                        foreach (ExpenseDataPoint fData in cat1.setOfExpenses)
                         {
                             if (fData.date.Month == month)
                             {
@@ -409,13 +434,13 @@ namespace BudgetApp
                     }
                     else
                     {
-                        catDataSet = foodDataSet;
+                        catDataSet = cat1.setOfExpenses;
                     }
                     break;
-                case Category.HOUSE:
+                case Category.CAT2:
                     if (tSpan == TimeSpan.MONTHLY)
                     {
-                        foreach (ExpenseDataPoint fData in houseDataSet)
+                        foreach (ExpenseDataPoint fData in cat2.setOfExpenses)
                         {
                             if (fData.date.Month == month)
                             {
@@ -425,13 +450,13 @@ namespace BudgetApp
                     }
                     else
                     {
-                        catDataSet = houseDataSet;
+                        catDataSet = cat2.setOfExpenses;
                     }
                     break;
-                case Category.LIESURE:
+                case Category.CAT3:
                     if (tSpan == TimeSpan.MONTHLY)
                     {
-                        foreach (ExpenseDataPoint fData in liesureDataSet)
+                        foreach (ExpenseDataPoint fData in cat3.setOfExpenses)
                         {
                             if (fData.date.Month == month)
                             {
@@ -441,13 +466,13 @@ namespace BudgetApp
                     }
                     else
                     {
-                        catDataSet = liesureDataSet;
+                        catDataSet = cat3.setOfExpenses;
                     }
                     break;
-                case Category.NEEDED:
+                case Category.CAT4:
                     if (tSpan == TimeSpan.MONTHLY)
                     {
-                        foreach (ExpenseDataPoint fData in neededDataSet)
+                        foreach (ExpenseDataPoint fData in cat4.setOfExpenses)
                         {
                             if (fData.date.Month == month)
                             {
@@ -457,7 +482,7 @@ namespace BudgetApp
                     }
                     else
                     {
-                        catDataSet = neededDataSet;
+                        catDataSet = cat4.setOfExpenses;
                     }
                     break;
             }

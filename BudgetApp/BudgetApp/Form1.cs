@@ -22,6 +22,7 @@ namespace BudgetApp
     {
         int month = 1;
         Expenses expense;
+        
         public Form1()
         {
             InitializeComponent();
@@ -52,16 +53,16 @@ namespace BudgetApp
                 switch (categoryInput.SelectedItem.ToString())
                 {
                     case "Food":
-                        catInputEnum = Category.FOOD;
+                        catInputEnum = Category.CAT1;
                         break;
                     case "House":
-                        catInputEnum = Category.HOUSE;
+                        catInputEnum = Category.CAT2;
                         break;
                     case "Liesure":
-                        catInputEnum = Category.LIESURE;
+                        catInputEnum = Category.CAT3;
                         break;
                     case "Needed":
-                        catInputEnum = Category.NEEDED;
+                        catInputEnum = Category.CAT4;
                         break;
                     default:
                         break;
@@ -95,16 +96,16 @@ namespace BudgetApp
                     allDetails.Text = expense.ShowCategoryDetails(Category.OVERALL);
                     break;
                 case 1:
-                    allDetails.Text = expense.ShowCategoryDetails(Category.FOOD);
+                    allDetails.Text = expense.ShowCategoryDetails(Category.CAT1);
                     break;
                 case 2:
-                    allDetails.Text = expense.ShowCategoryDetails(Category.HOUSE);
+                    allDetails.Text = expense.ShowCategoryDetails(Category.CAT2);
                     break;
                 case 3:
-                    allDetails.Text = expense.ShowCategoryDetails(Category.LIESURE);
+                    allDetails.Text = expense.ShowCategoryDetails(Category.CAT3);
                     break;
                 case 4:
-                    allDetails.Text = expense.ShowCategoryDetails(Category.NEEDED);
+                    allDetails.Text = expense.ShowCategoryDetails(Category.CAT4);
                     break;
 
             }
@@ -119,16 +120,16 @@ namespace BudgetApp
                     monthlyDetails.Text = expense.ShowCategoryDetails(Category.OVERALL, TimeSpan.MONTHLY, this.month);
                     break;
                 case 1:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.FOOD, TimeSpan.MONTHLY, this.month);
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.CAT1, TimeSpan.MONTHLY, this.month);
                     break;
                 case 2:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.HOUSE, TimeSpan.MONTHLY, this.month);
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.CAT2, TimeSpan.MONTHLY, this.month);
                     break;
                 case 3:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.LIESURE, TimeSpan.MONTHLY, this.month);
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.CAT3, TimeSpan.MONTHLY, this.month);
                     break;
                 case 4:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.NEEDED, TimeSpan.MONTHLY, this.month);
+                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.CAT4, TimeSpan.MONTHLY, this.month);
                     break;
 
             }
@@ -143,19 +144,19 @@ namespace BudgetApp
             String month = monthlyMonthDropDown.SelectedItem.ToString();
             this.month = monthlyMonthDropDown.SelectedIndex+1;
             expense.UpdateMonthlyTotals(this.month);
-            expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
-            expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY);
-            expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY);
-            expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.CAT1, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.CAT2, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.CAT3, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.CAT4, TimeSpan.MONTHLY);
         }
 
 
         private void timespanControl_Click(object sender, EventArgs e)
         {
-            expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
-            expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY);
-            expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY);
-            expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.CAT1, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.CAT2, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.CAT3, TimeSpan.MONTHLY);
+            expense.GetTotalPerCat(Category.CAT4, TimeSpan.MONTHLY);
         }
        
         #endregion //Monthly
@@ -238,14 +239,14 @@ namespace BudgetApp
                     monthlyDetails.Text = expense.ShowCategoryDetails(Category.OVERALL);
                     this.monthlyIncome.Text = "Gross Income: " + (expense.GetGrossIncome() / 12.00).ToString("C");
                     this.monthlyTotals.Text = expense.ShowOverview(TimeSpan.MONTHLY, currentMonth);
-                    expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY);
-                    expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY);
-                    expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY);
-                    expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY);
-                    this.monthlyTotalSpent.Text = (expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY)
-                        + expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY)
-                        + expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY)
-                        + expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY)).ToString("C");
+                    expense.GetTotalPerCat(Category.CAT1, TimeSpan.MONTHLY);
+                    expense.GetTotalPerCat(Category.CAT2, TimeSpan.MONTHLY);
+                    expense.GetTotalPerCat(Category.CAT3, TimeSpan.MONTHLY);
+                    expense.GetTotalPerCat(Category.CAT4, TimeSpan.MONTHLY);
+                    this.monthlyTotalSpent.Text = (expense.GetTotalPerCat(Category.CAT1, TimeSpan.MONTHLY)
+                        + expense.GetTotalPerCat(Category.CAT2, TimeSpan.MONTHLY)
+                        + expense.GetTotalPerCat(Category.CAT3, TimeSpan.MONTHLY)
+                        + expense.GetTotalPerCat(Category.CAT4, TimeSpan.MONTHLY)).ToString("C");
                     this.monthlyNetIncome.Text = expense.GetNetTotalAsString();
                 }
             }
@@ -254,7 +255,7 @@ namespace BudgetApp
                 MessageBox.Show($"Security error.\n\nError message: {ex.Message}\n\n" +
                 $"Details:\n\n{ex.StackTrace}");
             }
-            catch (System.ArgumentException ex)
+            catch (System.ArgumentException)
             {
 
             }
@@ -351,10 +352,10 @@ namespace BudgetApp
 
             allChart.Series[seriesname].Label = "#PERCENT";
 
-            allChart.Series[seriesname].Points.AddXY("Food", expense.GetTotalPerCat(Category.FOOD));
-            allChart.Series[seriesname].Points.AddXY("House", expense.GetTotalPerCat(Category.HOUSE));
-            allChart.Series[seriesname].Points.AddXY("Liesure", expense.GetTotalPerCat(Category.LIESURE));
-            allChart.Series[seriesname].Points.AddXY("Needed", expense.GetTotalPerCat(Category.NEEDED));
+            allChart.Series[seriesname].Points.AddXY("Food", expense.GetTotalPerCat(Category.CAT1));
+            allChart.Series[seriesname].Points.AddXY("House", expense.GetTotalPerCat(Category.CAT2));
+            allChart.Series[seriesname].Points.AddXY("Liesure", expense.GetTotalPerCat(Category.CAT3));
+            allChart.Series[seriesname].Points.AddXY("Needed", expense.GetTotalPerCat(Category.CAT4));
 
             allChart.Series[seriesname].Points[0].LegendText = "Food";
             allChart.Series[seriesname].Points[1].LegendText = "House";
@@ -384,13 +385,13 @@ namespace BudgetApp
             monthlyChart.Series[seriesname].Label = "#PERCENT";
 
             monthlyChart.Series[seriesname].Points.AddXY("Food",
-                expense.GetTotalPerCat(Category.FOOD, TimeSpan.MONTHLY));
+                expense.GetTotalPerCat(Category.CAT1, TimeSpan.MONTHLY));
             monthlyChart.Series[seriesname].Points.AddXY("House",
-                expense.GetTotalPerCat(Category.HOUSE, TimeSpan.MONTHLY));
+                expense.GetTotalPerCat(Category.CAT2, TimeSpan.MONTHLY));
             monthlyChart.Series[seriesname].Points.AddXY("Liesure",
-                expense.GetTotalPerCat(Category.LIESURE, TimeSpan.MONTHLY));
+                expense.GetTotalPerCat(Category.CAT3, TimeSpan.MONTHLY));
             monthlyChart.Series[seriesname].Points.AddXY("Needed",
-                expense.GetTotalPerCat(Category.NEEDED, TimeSpan.MONTHLY));
+                expense.GetTotalPerCat(Category.CAT4, TimeSpan.MONTHLY));
 
 
             monthlyChart.Series[seriesname].Points[0].LegendText = "Food";

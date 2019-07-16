@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -116,16 +117,17 @@
             this.saveAsDialog = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.Averages = new System.Windows.Forms.SplitContainer();
-            this.yearlyAverage = new System.Windows.Forms.Label();
-            this.monthlyAverage = new System.Windows.Forms.Label();
             this.yearlyAvgNetIncome = new System.Windows.Forms.Label();
             this.yearlyAvgCatTotals = new System.Windows.Forms.Label();
             this.yearlyAvgTotalSpent = new System.Windows.Forms.Label();
             this.yearlyAvgGrossIncome = new System.Windows.Forms.Label();
+            this.yearlyAverage = new System.Windows.Forms.Label();
             this.monthlyAvgNetIncome = new System.Windows.Forms.Label();
             this.monthlyAvgCatTotals = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.monthlyAvgGrossIncome = new System.Windows.Forms.Label();
+            this.monthlyAverage = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.timespanControl.SuspendLayout();
             this.allTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.allChart)).BeginInit();
@@ -140,6 +142,7 @@
             this.Averages.Panel1.SuspendLayout();
             this.Averages.Panel2.SuspendLayout();
             this.Averages.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // IncomeUpdateButton
@@ -255,7 +258,7 @@
             this.timespanControl.Controls.Add(this.allTab);
             this.timespanControl.Controls.Add(this.monthlyTab);
             this.timespanControl.Controls.Add(this.yearlyTab);
-            this.timespanControl.Location = new System.Drawing.Point(22, 242);
+            this.timespanControl.Location = new System.Drawing.Point(19, 269);
             this.timespanControl.Name = "timespanControl";
             this.timespanControl.Padding = new System.Drawing.Point(3, 3);
             this.timespanControl.SelectedIndex = 0;
@@ -580,7 +583,6 @@
             // categoryInput
             // 
             this.categoryInput.BackColor = System.Drawing.SystemColors.Window;
-            this.categoryInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.categoryInput.FormattingEnabled = true;
             this.categoryInput.Items.AddRange(new object[] {
             "Food",
@@ -609,7 +611,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(906, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(897, 24);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -863,7 +865,7 @@
             // 
             // Averages
             // 
-            this.Averages.Location = new System.Drawing.Point(360, 27);
+            this.Averages.Location = new System.Drawing.Point(360, 37);
             this.Averages.Name = "Averages";
             // 
             // Averages.Panel1
@@ -882,27 +884,9 @@
             this.Averages.Panel2.Controls.Add(this.label15);
             this.Averages.Panel2.Controls.Add(this.monthlyAvgGrossIncome);
             this.Averages.Panel2.Controls.Add(this.monthlyAverage);
-            this.Averages.Size = new System.Drawing.Size(537, 209);
+            this.Averages.Size = new System.Drawing.Size(537, 199);
             this.Averages.SplitterDistance = 269;
             this.Averages.TabIndex = 18;
-            // 
-            // yearlyAverage
-            // 
-            this.yearlyAverage.AutoSize = true;
-            this.yearlyAverage.Location = new System.Drawing.Point(92, 4);
-            this.yearlyAverage.Name = "yearlyAverage";
-            this.yearlyAverage.Size = new System.Drawing.Size(79, 13);
-            this.yearlyAverage.TabIndex = 0;
-            this.yearlyAverage.Text = "Yearly Average";
-            // 
-            // monthlyAverage
-            // 
-            this.monthlyAverage.AutoSize = true;
-            this.monthlyAverage.Location = new System.Drawing.Point(82, 4);
-            this.monthlyAverage.Name = "monthlyAverage";
-            this.monthlyAverage.Size = new System.Drawing.Size(87, 13);
-            this.monthlyAverage.TabIndex = 0;
-            this.monthlyAverage.Text = "Monthly Average";
             // 
             // yearlyAvgNetIncome
             // 
@@ -936,6 +920,15 @@
             this.yearlyAvgGrossIncome.TabIndex = 24;
             this.yearlyAvgGrossIncome.Text = "Gross Income: ";
             // 
+            // yearlyAverage
+            // 
+            this.yearlyAverage.AutoSize = true;
+            this.yearlyAverage.Location = new System.Drawing.Point(13, 0);
+            this.yearlyAverage.Name = "yearlyAverage";
+            this.yearlyAverage.Size = new System.Drawing.Size(79, 13);
+            this.yearlyAverage.TabIndex = 0;
+            this.yearlyAverage.Text = "Yearly Average";
+            // 
             // monthlyAvgNetIncome
             // 
             this.monthlyAvgNetIncome.Location = new System.Drawing.Point(46, 168);
@@ -967,6 +960,19 @@
             this.monthlyAvgGrossIncome.Size = new System.Drawing.Size(163, 24);
             this.monthlyAvgGrossIncome.TabIndex = 24;
             this.monthlyAvgGrossIncome.Text = "Gross Income: ";
+            // 
+            // monthlyAverage
+            // 
+            this.monthlyAverage.AutoSize = true;
+            this.monthlyAverage.Location = new System.Drawing.Point(17, 0);
+            this.monthlyAverage.Name = "monthlyAverage";
+            this.monthlyAverage.Size = new System.Drawing.Size(87, 13);
+            this.monthlyAverage.TabIndex = 0;
+            this.monthlyAverage.Text = "Monthly Average";
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // Form1
             // 
@@ -1014,6 +1020,7 @@
             this.Averages.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Averages)).EndInit();
             this.Averages.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1109,6 +1116,7 @@
         private System.Windows.Forms.Label monthlyAvgCatTotals;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label monthlyAvgGrossIncome;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
 
