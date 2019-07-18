@@ -34,7 +34,7 @@ namespace BudgetApp
             try
             {
                 double input = Double.Parse(incomeTextBox.Text);
-                String incomeOutput = expense.UpdateGrossIncome(input);
+                String incomeOutput = expense.GetAndSetGrossIncome(input);
                 yearlyIncome.Text = incomeOutput;
             }
             catch (Exception)
@@ -92,43 +92,45 @@ namespace BudgetApp
             switch (CategoryAllDetailDropDown.SelectedIndex)
             {
                case 0:
-                    allDetails.Text = expense.ShowCategoryDetails(Category.OVERALL);
+                    allDetails.Text = expense.GetCategoryDetails(Category.OVERALL);
                     break;
                 case 1:
-                    allDetails.Text = expense.ShowCategoryDetails(Category.CAT1);
+                    allDetails.Text = expense.GetCategoryDetails(Category.CAT1);
                     break;
                 case 2:
-                    allDetails.Text = expense.ShowCategoryDetails(Category.CAT2);
+                    allDetails.Text = expense.GetCategoryDetails(Category.CAT2);
                     break;
                 case 3:
-                    allDetails.Text = expense.ShowCategoryDetails(Category.CAT3);
+                    allDetails.Text = expense.GetCategoryDetails(Category.CAT3);
                     break;
                 case 4:
-                    allDetails.Text = expense.ShowCategoryDetails(Category.CAT4);
+                    allDetails.Text = expense.GetCategoryDetails(Category.CAT4);
                     break;
 
             }
         }
-        #endregion //All
+        #endregion //End All
         #region Monthly
         private void CategoryMonthlyDetailDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
+            monthlyTotals.Text = expense.GetCategoryTotals(TimeSpan.MONTHLY, this.month);
             switch (CategoryMonthlyDetailDropDown.SelectedIndex)
             {
                 case 0:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.OVERALL, TimeSpan.MONTHLY, this.month);
+                    monthlyDetails.Text = expense.GetCategoryDetails(Category.OVERALL, TimeSpan.MONTHLY, this.month);
+                    
                     break;
                 case 1:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.CAT1, TimeSpan.MONTHLY, this.month);
+                    monthlyDetails.Text = expense.GetCategoryDetails(Category.CAT1, TimeSpan.MONTHLY, this.month);
                     break;
                 case 2:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.CAT2, TimeSpan.MONTHLY, this.month);
+                    monthlyDetails.Text = expense.GetCategoryDetails(Category.CAT2, TimeSpan.MONTHLY, this.month);
                     break;
                 case 3:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.CAT3, TimeSpan.MONTHLY, this.month);
+                    monthlyDetails.Text = expense.GetCategoryDetails(Category.CAT3, TimeSpan.MONTHLY, this.month);
                     break;
                 case 4:
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.CAT4, TimeSpan.MONTHLY, this.month);
+                    monthlyDetails.Text = expense.GetCategoryDetails(Category.CAT4, TimeSpan.MONTHLY, this.month);
                     break;
 
             }
@@ -158,7 +160,7 @@ namespace BudgetApp
             expense.GetTotalPerCat(Category.CAT4, TimeSpan.MONTHLY);
         }
        
-        #endregion //Monthly
+        #endregion //End Monthly
         #region File_Management
         private void saveToolMenuItem_Click(object sender, EventArgs e)
         {
@@ -220,22 +222,19 @@ namespace BudgetApp
                     BinaryFormatter formatter = new BinaryFormatter();
                     expense = (Expenses)formatter.Deserialize(fs);
                     this.Text = "Budget Tool - " + openFileDialog1.FileName;
-                    //Update Yearly Display
-                    this.yearLabel.Text = DateTime.Now.Year.ToString();
-                    this.yearlyIncome.Text = "Gross Income: " + expense.GetGrossIncome().ToString("C");
-                    this.overallTotals.Text = expense.GetCategoryTotals();
-                    this.yearlyTotalSpent.Text = expense.GetTotalSpentAsString();
-                    this.yearlyNetIncome.Text = expense.GetNetTotalAsString();
+
+                    //Update All Display
                     allChart.Series.Clear();
                     DisplayPieChart();
-                    allDetails.Text = expense.ShowCategoryDetails(Category.OVERALL);
+                    this.overallTotals.Text = expense.GetCategoryTotals();
+                    allDetails.Text = expense.GetCategoryDetails(Category.OVERALL);
 
                     //Update Monthly Display
                     int currentMonth = DateTime.Now.Month;
                     expense.UpdateMonthlyTotals(currentMonth);
                     DisplayMonthlyPieChart();
                     this.monthLabel.Text = ((Month)currentMonth).ToString();
-                    monthlyDetails.Text = expense.ShowCategoryDetails(Category.OVERALL);
+                    monthlyDetails.Text = expense.GetCategoryDetails(Category.OVERALL);
                     this.monthlyIncome.Text = "Gross Income: " + (expense.GetGrossIncome() / 12.00).ToString("C");
                     this.monthlyTotals.Text = expense.GetCategoryTotals(TimeSpan.MONTHLY, currentMonth);
                     expense.GetTotalPerCat(Category.CAT1, TimeSpan.MONTHLY);
@@ -247,6 +246,12 @@ namespace BudgetApp
                         + expense.GetTotalPerCat(Category.CAT3, TimeSpan.MONTHLY)
                         + expense.GetTotalPerCat(Category.CAT4, TimeSpan.MONTHLY)).ToString("C");
                     this.monthlyNetIncome.Text = expense.GetNetTotalAsString();
+
+                    //Update Yearly Display
+                    this.yearLabel.Text = DateTime.Now.Year.ToString();
+                    this.yearlyIncome.Text = "Gross Income: " + expense.GetGrossIncome().ToString("C");
+                    this.yearlyTotalSpent.Text = expense.GetTotalSpentAsString();
+                    this.yearlyNetIncome.Text = expense.GetNetTotalAsString();
                 }
             }
             catch (SerializationException ex)
@@ -263,7 +268,7 @@ namespace BudgetApp
         {
 
         }
-        #endregion //File_Management
+        #endregion //End File_Management
         #region Pie_Chart_Palette
         private void BrightToolStripMenuItem_Click(object sender, EventArgs e)
         {

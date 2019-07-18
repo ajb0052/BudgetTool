@@ -5,13 +5,10 @@ using System.Linq;
 
 namespace BudgetApp
 {
-
     public enum Category { OVERALL, CAT1, CAT2, CAT3, CAT4, CAT5, CAT6, CAT7 };
     public enum TimeSpan { ALL, MONTHLY, YEARLY };
     public enum Month { January = 1, February, March, April, May, June, July, August, September, October, November, December };
-
     public enum Chart { Pie, Area };
-
 
     class InvalidNetIncomeException : Exception
     {
@@ -80,23 +77,24 @@ namespace BudgetApp
         }
         
     }
+
     [Serializable]
     public class Expenses
     {
-
         private CategoryData cat1;
         private CategoryData cat2;
         private CategoryData cat3;
         private CategoryData cat4;
+        private CategoryData cat5;
+        private CategoryData cat6;
+        private CategoryData cat7;
 
-
-
+        private CategoryData[] categoryDataArray;
         private double totalSpent;
         private double monthlyTotalSpent;
         private double grossIncome;// yearly
 
         private Chart chart;
-         
          
         private String expenseListFood;
         private String monthlyExpenseListFood;
@@ -107,24 +105,15 @@ namespace BudgetApp
         private String expenseListNeeded;
         private String monthlyExpenseListNeeded;
 
-
         public String filename;
         public string[] categories;
 
         /* Contructor gives default values upon instantiation */
         public Expenses()
         {
-            //
-            
             this.totalSpent = 0;
             this.monthlyTotalSpent = 0;
-            //
-            this.cat1 = new CategoryData("food");
-            this.cat2 = new CategoryData("house");
-            this.cat3 = new CategoryData("liesure");
-            this.cat4 = new CategoryData("needed");
-            //
-
+           
             this.grossIncome = 0;
             
             this.monthlyExpenseListFood = "";
@@ -139,14 +128,31 @@ namespace BudgetApp
             this.chart = Chart.Pie;
 
             //temp 
-            categories = new String[8];
+            categories = new string[8];
             this.categories[0] = "overall";
             this.categories[1] = "food";
             this.categories[2] = "house";
             this.categories[3] = "liesure";
             this.categories[4] = "needed";
+
+            this.cat1 = new CategoryData("food");
+            this.cat2 = new CategoryData("house");
+            this.cat3 = new CategoryData("liesure");
+            this.cat4 = new CategoryData("needed");
+            this.cat5 = null;
+            this.cat6 = null;
+            this.cat7 = null;
+            CategoryData[] categoryDataArray = new CategoryData[7] {
+                this.cat1,
+                this.cat2,
+                this.cat3,
+                this.cat4,
+                null,
+                null,
+                null
+            };
+
         }
-        
         /* Gets details on an expense made and updates the corresponding set and totals */
         public void AddExpense(string name, double amount, DateTime date, Category category)
         {
@@ -174,6 +180,19 @@ namespace BudgetApp
 
             totalSpent += amount;
         }
+        /*Return: True if add was successful, false if failed*/
+        public bool AddCategory(string catName)
+        {
+            for(int i = 0; i < categories.Length; i++)
+            {
+                if(categories[i] == null)
+                {
+                    categories[i] = catName;
+                    return true;
+                }
+            }
+            return false;
+        }
         ///-----------------------------------------------------------------------------------------------------------------------------------------
         public string GetTotalSpentAsString()
         {
@@ -195,7 +214,7 @@ namespace BudgetApp
         {
             this.chart = chart;
         }
-        public string UpdateGrossIncome(double grossIncome)
+        public string GetAndSetGrossIncome(double grossIncome)
         {
             this.grossIncome = grossIncome;
             string output = "Gross Income: " + grossIncome.ToString("C") + "\n";
@@ -233,7 +252,6 @@ namespace BudgetApp
                 return monthlyTotal;
             return total;
         }
-
         ///-----------------------------------------------------------------------------------------------------------------------------------------
         //Should be called before every occurence of GetTotal where the month is important it also updates category lists
         public void UpdateMonthlyTotals(int month)
@@ -303,7 +321,6 @@ namespace BudgetApp
                 expenseListNeeded += expense.ToString() + "\n";
             }
         }
-
         public void UpdateMonthlyDataSets(int month)
         {
             foreach (ExpenseDataPoint fData in cat1.setOfExpenses)
@@ -315,43 +332,10 @@ namespace BudgetApp
             }
         }
         ///-----------------------------------------------------------------------------------------------------------------------------------------
-
+        /*Return: a formetted string of the totals for each category*/
         public string GetCategoryTotals(TimeSpan timeSpanParam = TimeSpan.ALL, int month = 1, double year = 2019)
         {
-            string output = "";
-            if (timeSpanParam == TimeSpan.ALL)
-            {
-                output += "Food: " + cat1.total.ToString("C") + "\n";
-                output += "House: " + cat2.total.ToString("C") + "\n";
-                output += "Liesure: " + cat3.total.ToString("C") + "\n";
-                output += "Needed: " + cat4.total.ToString("C") + "\n";
-            }
-            else if(timeSpanParam == TimeSpan.MONTHLY)
-            {
-                double monthlyGrossIncome = grossIncome / 12;
-                UpdateMonthlyTotals(month);
-                
-                output += "Food: " + cat1.monthlyTotal.ToString("C") + "\n";
-                output += "House: " + cat2.monthlyTotal.ToString("C") + "\n";
-                output += "Liesure: " + cat3.monthlyTotal.ToString("C") + "\n";
-                output += "Needed: " + cat4.monthlyTotal.ToString("C") + "\n";
-            }
-            else if(timeSpanParam == TimeSpan.YEARLY)
-            {
-
-            }
-            return output;
-        }
-
-        /* Return: prints out the where the money was spent for one category specified in parameter */
-        public string ShowCategoryDetails(Category cat, TimeSpan tSpan = TimeSpan.ALL, int month = 1)
-        {
-            string catString = this.categories[(int)cat];
-            string output = "Gross Income: " + this.grossIncome.ToString("C") + "\n";
-            output = catString+"\n";
-            output += "Name \t Date \t Amount";
-            SortedSet<ExpenseDataPoint> catDataSet = new SortedSet<ExpenseDataPoint>();
-            CategoryData[] categoryDataArray = new CategoryData[7] {
+            categoryDataArray = new CategoryData[7] {
                 this.cat1,
                 this.cat2,
                 this.cat3,
@@ -360,6 +344,41 @@ namespace BudgetApp
                 null,
                 null
             };
+            string output = "";
+            if (timeSpanParam == TimeSpan.ALL)
+            {
+                foreach (CategoryData cat in categoryDataArray)
+                {
+                    if (cat == null)
+                        break;
+                    output += ToCapitalize(cat.name) + ": " + cat.total.ToString("C") + "\n";
+                }
+            }
+            else if(timeSpanParam == TimeSpan.MONTHLY)
+            {
+                double monthlyGrossIncome = grossIncome / 12;
+                UpdateMonthlyTotals(month);
+                
+                output += ToCapitalize(cat1.name) + ": " + cat1.monthlyTotal.ToString("C") + "\n";
+                output += ToCapitalize(cat2.name) + ": " + cat2.monthlyTotal.ToString("C") + "\n";
+                output += ToCapitalize(cat3.name) + ": " + cat3.monthlyTotal.ToString("C") + "\n";
+                output += ToCapitalize(cat4.name) + ": " + cat4.monthlyTotal.ToString("C") + "\n";
+            }
+            else if(timeSpanParam == TimeSpan.YEARLY)
+            {
+
+            }
+            return output;
+        }
+        /* Return: A formatted string consisting of a table of when, where, and how much money was spent.*/
+        public string GetCategoryDetails(Category cat, TimeSpan tSpan = TimeSpan.ALL, int month = 1)
+        {
+
+            string catString = this.categories[(int)cat].ToUpper();
+            string output = "Gross Income: " + this.grossIncome.ToString("C") + "\n";
+            output = catString+"\n";
+            output += "Name \t Date \t Amount";
+            SortedSet<ExpenseDataPoint> catDataSet = new SortedSet<ExpenseDataPoint>();
             if(cat == Category.OVERALL)
             {
                 if(tSpan == TimeSpan.ALL)
@@ -371,8 +390,10 @@ namespace BudgetApp
                 }
                 else if(tSpan == TimeSpan.MONTHLY)
                 {
-                    foreach(CategoryData catData in categoryDataArray)
+                    foreach(CategoryData catData in this.categoryDataArray)
                     {
+                        if (catData == null)
+                            break;
                         foreach(ExpenseDataPoint dataPoint in catData.setOfExpenses) 
                         {
                             if (month == dataPoint.date.Month)
@@ -384,11 +405,11 @@ namespace BudgetApp
             else{
                 if (tSpan == TimeSpan.ALL)
                 {
-                    catDataSet = categoryDataArray[(int)cat-1].setOfExpenses;
+                    catDataSet = this.categoryDataArray[(int)cat-1].setOfExpenses;
                 }
                 else if (tSpan == TimeSpan.MONTHLY)
                 {
-                    foreach (ExpenseDataPoint dataPoint in categoryDataArray[(int)cat-1].setOfExpenses)
+                    foreach (ExpenseDataPoint dataPoint in this.categoryDataArray[(int)cat-1].setOfExpenses)
                     {
                         if (month == dataPoint.date.Month)
                             catDataSet.Add((ExpenseDataPoint)dataPoint);
@@ -402,5 +423,11 @@ namespace BudgetApp
             }
             return output;
         }
+        /*Helper methods that should have their own file*/
+        public string ToCapitalize(string word)
+        {
+            return char.ToUpper(word[0]) + word.Substring(1);
+        }
     }
+   
 }
