@@ -326,7 +326,7 @@
             this.yearlyPanel.Controls.Add(this.yearlyIncome);
             this.yearlyPanel.Location = new System.Drawing.Point(474, 10);
             this.yearlyPanel.Name = "yearlyPanel";
-            this.yearlyPanel.Size = new System.Drawing.Size(173, 159);
+            this.yearlyPanel.Size = new System.Drawing.Size(173, 172);
             this.yearlyPanel.TabIndex = 23;
             // 
             // yearLabel
@@ -341,7 +341,7 @@
             // overall
             // 
             this.overall.AutoSize = true;
-            this.overall.Location = new System.Drawing.Point(3, 0);
+            this.overall.Location = new System.Drawing.Point(3, 9);
             this.overall.Name = "overall";
             this.overall.Size = new System.Drawing.Size(40, 13);
             this.overall.TabIndex = 23;
@@ -420,7 +420,7 @@
             // monthly
             // 
             this.monthly.AutoSize = true;
-            this.monthly.Location = new System.Drawing.Point(3, 0);
+            this.monthly.Location = new System.Drawing.Point(3, 9);
             this.monthly.Name = "monthly";
             this.monthly.Size = new System.Drawing.Size(44, 13);
             this.monthly.TabIndex = 23;
@@ -611,7 +611,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(897, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(904, 24);
             this.menuStrip1.TabIndex = 17;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -865,11 +865,14 @@
             // 
             // Averages
             // 
-            this.Averages.Location = new System.Drawing.Point(360, 37);
+            this.Averages.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Averages.Location = new System.Drawing.Point(357, 49);
             this.Averages.Name = "Averages";
             // 
             // Averages.Panel1
             // 
+            this.Averages.Panel1.AccessibleName = "YearlyAverage";
+            this.Averages.Panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Averages.Panel1.Controls.Add(this.yearlyAvgNetIncome);
             this.Averages.Panel1.Controls.Add(this.yearlyAvgCatTotals);
             this.Averages.Panel1.Controls.Add(this.yearlyAvgTotalSpent);
@@ -879,6 +882,8 @@
             // 
             // Averages.Panel2
             // 
+            this.Averages.Panel2.AccessibleName = "MonthlyAverage";
+            this.Averages.Panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Averages.Panel2.Controls.Add(this.monthlyAvgNetIncome);
             this.Averages.Panel2.Controls.Add(this.monthlyAvgCatTotals);
             this.Averages.Panel2.Controls.Add(this.label15);
@@ -890,7 +895,7 @@
             // 
             // yearlyAvgNetIncome
             // 
-            this.yearlyAvgNetIncome.Location = new System.Drawing.Point(42, 168);
+            this.yearlyAvgNetIncome.Location = new System.Drawing.Point(21, 144);
             this.yearlyAvgNetIncome.Name = "yearlyAvgNetIncome";
             this.yearlyAvgNetIncome.Size = new System.Drawing.Size(168, 12);
             this.yearlyAvgNetIncome.TabIndex = 26;
@@ -898,7 +903,7 @@
             // 
             // yearlyAvgCatTotals
             // 
-            this.yearlyAvgCatTotals.Location = new System.Drawing.Point(42, 86);
+            this.yearlyAvgCatTotals.Location = new System.Drawing.Point(21, 62);
             this.yearlyAvgCatTotals.Name = "yearlyAvgCatTotals";
             this.yearlyAvgCatTotals.Size = new System.Drawing.Size(163, 55);
             this.yearlyAvgCatTotals.TabIndex = 27;
@@ -906,7 +911,7 @@
             // 
             // yearlyAvgTotalSpent
             // 
-            this.yearlyAvgTotalSpent.Location = new System.Drawing.Point(42, 154);
+            this.yearlyAvgTotalSpent.Location = new System.Drawing.Point(21, 130);
             this.yearlyAvgTotalSpent.Name = "yearlyAvgTotalSpent";
             this.yearlyAvgTotalSpent.Size = new System.Drawing.Size(168, 14);
             this.yearlyAvgTotalSpent.TabIndex = 25;
@@ -914,7 +919,7 @@
             // 
             // yearlyAvgGrossIncome
             // 
-            this.yearlyAvgGrossIncome.Location = new System.Drawing.Point(42, 62);
+            this.yearlyAvgGrossIncome.Location = new System.Drawing.Point(21, 38);
             this.yearlyAvgGrossIncome.Name = "yearlyAvgGrossIncome";
             this.yearlyAvgGrossIncome.Size = new System.Drawing.Size(163, 24);
             this.yearlyAvgGrossIncome.TabIndex = 24;
@@ -923,7 +928,8 @@
             // yearlyAverage
             // 
             this.yearlyAverage.AutoSize = true;
-            this.yearlyAverage.Location = new System.Drawing.Point(13, 0);
+            this.yearlyAverage.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.yearlyAverage.Location = new System.Drawing.Point(13, 10);
             this.yearlyAverage.Name = "yearlyAverage";
             this.yearlyAverage.Size = new System.Drawing.Size(79, 13);
             this.yearlyAverage.TabIndex = 0;
@@ -931,7 +937,7 @@
             // 
             // monthlyAvgNetIncome
             // 
-            this.monthlyAvgNetIncome.Location = new System.Drawing.Point(46, 168);
+            this.monthlyAvgNetIncome.Location = new System.Drawing.Point(26, 144);
             this.monthlyAvgNetIncome.Name = "monthlyAvgNetIncome";
             this.monthlyAvgNetIncome.Size = new System.Drawing.Size(168, 12);
             this.monthlyAvgNetIncome.TabIndex = 26;
@@ -939,7 +945,7 @@
             // 
             // monthlyAvgCatTotals
             // 
-            this.monthlyAvgCatTotals.Location = new System.Drawing.Point(46, 86);
+            this.monthlyAvgCatTotals.Location = new System.Drawing.Point(26, 62);
             this.monthlyAvgCatTotals.Name = "monthlyAvgCatTotals";
             this.monthlyAvgCatTotals.Size = new System.Drawing.Size(163, 55);
             this.monthlyAvgCatTotals.TabIndex = 27;
@@ -947,7 +953,7 @@
             // 
             // label15
             // 
-            this.label15.Location = new System.Drawing.Point(46, 154);
+            this.label15.Location = new System.Drawing.Point(26, 130);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(168, 14);
             this.label15.TabIndex = 25;
@@ -955,7 +961,7 @@
             // 
             // monthlyAvgGrossIncome
             // 
-            this.monthlyAvgGrossIncome.Location = new System.Drawing.Point(46, 62);
+            this.monthlyAvgGrossIncome.Location = new System.Drawing.Point(26, 38);
             this.monthlyAvgGrossIncome.Name = "monthlyAvgGrossIncome";
             this.monthlyAvgGrossIncome.Size = new System.Drawing.Size(163, 24);
             this.monthlyAvgGrossIncome.TabIndex = 24;
@@ -964,7 +970,7 @@
             // monthlyAverage
             // 
             this.monthlyAverage.AutoSize = true;
-            this.monthlyAverage.Location = new System.Drawing.Point(17, 0);
+            this.monthlyAverage.Location = new System.Drawing.Point(12, 10);
             this.monthlyAverage.Name = "monthlyAverage";
             this.monthlyAverage.Size = new System.Drawing.Size(87, 13);
             this.monthlyAverage.TabIndex = 0;
@@ -981,7 +987,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.ClientSize = new System.Drawing.Size(906, 646);
+            this.ClientSize = new System.Drawing.Size(904, 683);
             this.Controls.Add(this.Averages);
             this.Controls.Add(this.dateInput);
             this.Controls.Add(this.categoryInput);

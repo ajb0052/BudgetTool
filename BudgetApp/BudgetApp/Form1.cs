@@ -85,7 +85,6 @@ namespace BudgetApp
         private void UpdateChartButton_Click(object sender, EventArgs e)
         {
             allChart.Series.Clear();
-
             DisplayPieChart();
         }
         private void CategoryAllDetailsDropDown_SelectedIndexChanged(object sender, EventArgs e)
@@ -224,7 +223,7 @@ namespace BudgetApp
                     //Update Yearly Display
                     this.yearLabel.Text = DateTime.Now.Year.ToString();
                     this.yearlyIncome.Text = "Gross Income: " + expense.GetGrossIncome().ToString("C");
-                    this.overallTotals.Text = expense.ShowOverview();
+                    this.overallTotals.Text = expense.GetCategoryTotals();
                     this.yearlyTotalSpent.Text = expense.GetTotalSpentAsString();
                     this.yearlyNetIncome.Text = expense.GetNetTotalAsString();
                     allChart.Series.Clear();
@@ -238,7 +237,7 @@ namespace BudgetApp
                     this.monthLabel.Text = ((Month)currentMonth).ToString();
                     monthlyDetails.Text = expense.ShowCategoryDetails(Category.OVERALL);
                     this.monthlyIncome.Text = "Gross Income: " + (expense.GetGrossIncome() / 12.00).ToString("C");
-                    this.monthlyTotals.Text = expense.ShowOverview(TimeSpan.MONTHLY, currentMonth);
+                    this.monthlyTotals.Text = expense.GetCategoryTotals(TimeSpan.MONTHLY, currentMonth);
                     expense.GetTotalPerCat(Category.CAT1, TimeSpan.MONTHLY);
                     expense.GetTotalPerCat(Category.CAT2, TimeSpan.MONTHLY);
                     expense.GetTotalPerCat(Category.CAT3, TimeSpan.MONTHLY);
